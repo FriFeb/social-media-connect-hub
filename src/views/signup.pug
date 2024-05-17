@@ -1,0 +1,68 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  link(rel='stylesheet' href='/styles/styles.css')
+  script(src='/scripts/index.js' defer='')
+  title ConnectHub 
+.container
+  .image-side
+    .logo
+      img.logo-image(src='/images/logo.jpg' alt='')
+      p.logo-text Lorem Ipsum
+  .form-side
+    p.disclaimer Lorem ipsum dolor sit amet consectetur, adipisicing elit. Asperiores atque sit, quod harum deserunt! Vitae ratione optio deleniti, nihil similique, ipsa ea iure temporibus atque, molestiae ex rem voluptatem.
+    .form-container
+      h3.form-title It&apos;s time to register
+      form#reg-form.reg-form(method='POST')
+        .form-personal
+          .form-first-name
+            label(for='first-name') First Name
+            input#first-name(type='text' name='firstName' minlength='2' maxlength='40' pattern='^[A-Z].{1,39}' required='')
+            p.error
+          .form-second-name
+            label(for='second-name') Second Name
+            input#second-name(type='text' name='secondName' minlength='2' maxlength='40' pattern='^[A-Z].{1,39}' required='')
+            p.error
+        .form-social
+          .form-email
+            label(for='email') Email
+            input#email(type='email' name='email' minlength='3' maxlength='50' pattern='.{3,50}' required='')
+            p.error
+          .form-phone
+            label(for='phone') Phone Number
+            input#phone(type='tel' name='phone' minlength='12' maxlength='12' pattern='.{12}' required='')
+            p.error
+        .form-passwords
+          .pass-tooltip(hidden='')
+            p
+              img.tooltip-img(src='/images/red_cross.png' alt='')
+              | One capital letter!
+            p
+              img.tooltip-img(src='/images/red_cross.png' alt='')
+              | One lowercase letter!
+            p
+              img.tooltip-img(src='/images/red_cross.png' alt='')
+              | One digit!
+            p
+              img.tooltip-img(src='/images/red_cross.png' alt='')
+              | 6 to 30 characters in length!
+          .form-pass
+            label(for='pass') Password
+            .pass-container
+              input#pass(type='password' name='pass' minlength='6' maxlength='30' pattern='^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{6,30}' required='')
+              img.pass-eye(src='/images/eye.png' alt='')
+              img.pass-help(src='/images/question.png' alt='')
+            p.error
+          .form-confirm-pass
+            label(for='confirm-pass') Confirm Password
+            .pass-container
+              input#confirm-pass(type='password' name='confirmPass' minlength='6' maxlength='30' pattern='^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{6,30}' required='')
+              img.confirm-pass-eye(src='/images/eye.png' alt='')
+            p.error
+    .form-footer
+      button(type='submit' form='reg-form') Create Account
+      .log
+        p.log-text
+          | Already have an account?
+          a.log-link(href='') Log in

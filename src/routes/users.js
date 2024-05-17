@@ -1,12 +1,12 @@
 import express from 'express';
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.send('Here are the users');
-});
-
-router.get('/3', (req, res) => {
-  res.send('Here are the third user');
+router.get('/:id', (req, res) => {
+  // read the row from the db for the user with proper ID
+  // if no user
+  //  return 404
+  // else
+  //  render page with user info inserted
 });
 
 export default router;

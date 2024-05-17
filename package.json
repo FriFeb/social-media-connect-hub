@@ -9,6 +9,7 @@
     "server": "webpack serve --open --config webpack.dev.js",
     "start": "node ./src/index.js",
     "startdev": "nodemon ./src/index.js",
+    "debug": "nodemon --inspect=localhost:3090/ ./src/index.js",
     "lint": "eslint src --fix"
   },
   "type": "module",
@@ -32,7 +33,11 @@
     "webpack-dev-server": "^5.0.2"
   },
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "express": "^4.19.2",
-    "mysql": "^2.18.1"
+    "express-async-errors": "^3.1.1",
+    "express-fileupload": "^1.5.0",
+    "mysql": "^2.18.1",
+    "pug": "^3.0.2"
   }
 }
