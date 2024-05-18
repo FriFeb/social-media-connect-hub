@@ -23,3 +23,12 @@ initRoutes(app);
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
+
+/* 
+TODO: 
+- Write proper controller functions for user instance
+  - search info how to get user info properly (what required to retrieve the data)
+- Write controllers for each database instance
+
+- Provide render page middleware in "views" folder
+*/

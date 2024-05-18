@@ -1,3 +1,5 @@
+import asyncHandler from 'express-async-handler';
+
 function hasExtraFields(user, maxFields) {
   const keys = Object.keys(user);
 
@@ -31,6 +33,9 @@ function isEveryFieldValid({ email, pass }) {
   if (pass) isPasswordValid(pass);
 }
 
-export function isUserValid(user) {
-  isEveryFieldValid(user);
-}
+export const validateUser = asyncHandler(async (req, res, next) => {
+  const user = req.body;
+
+  res.user = user;
+  next();
+});
