@@ -14,8 +14,7 @@ export function uploadFile(file) {
   const uploadPath = join(__dirname, '/../static/images', getFileName(file));
 
   file.mv(uploadPath, (err) => {
-    // if (err) return res.status(500).send(err);
-    return err;
+    if (err) throw err;
   });
 
   console.log('File uploaded successfully!');

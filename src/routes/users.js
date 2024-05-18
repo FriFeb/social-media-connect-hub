@@ -1,12 +1,9 @@
 import express from 'express';
+import { getUsers, getUserByNickname } from '../controllers/user-controller.js';
 const router = express.Router();
 
-router.get('/:id', (req, res) => {
-  // read the row from the db for the user with proper ID
-  // if no user
-  //  return 404
-  // else
-  //  render page with user info inserted
-});
+router.get('/', getUsers, (req, res) => {});
+
+router.get('/:nickname', getUserByNickname, (req, res) => {});
 
 export default router;

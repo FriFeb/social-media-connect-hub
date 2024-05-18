@@ -1,4 +1,5 @@
 import express from 'express';
+import { deleteUser } from '../controllers/user-controller.js';
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -15,4 +16,5 @@ router.put('/', (req, res) => {
   // change the data in the database
 });
 
+router.delete('/', deleteUser, (req, res) => {});
 export default router;
