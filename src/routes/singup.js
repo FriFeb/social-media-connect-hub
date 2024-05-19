@@ -3,12 +3,13 @@ import { validateUser } from '../middlewares/user-validation.js';
 import { getAvatarPath } from '../middlewares/file-load.js';
 import { hashPassword } from '../middlewares/password-hash.js';
 import asyncHandler from 'express-async-handler';
-import { createUser } from '../controllers/user-controller.js';
+import { createUser, getUsers } from '../controllers/user-controller.js';
 
 const router = express.Router();
 
-// Render the page
-router.get('/', (req, res) => {});
+router.get('/', (req, res) => {
+  res.render('test');
+});
 
 // Validate
 // Upload image
@@ -19,10 +20,14 @@ router.post(
   validateUser,
   getAvatarPath,
   hashPassword,
-  // asyncHandler(async (req, res) => {
-  //   const newUser = await fetch()
-  // })
-  createUser
+  asyncHandler(async (req, res) => {
+    const user = await createUser(req, res);
+
+    const parsedUser = JSON.parse(user);
+    const userId = parsedUser.insertId;
+
+    res.render('feed', { userId });
+  })
 );
 
 export default router;

@@ -4,6 +4,7 @@ const router = express.Router();
 
 router.get('/', (req, res) => {
   // render the page
+  res.send('setting');
 });
 
 router.put('/', (req, res) => {
