@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
   // else
   //  show only feed in sidebar
   //  and a proposal to signup or login
-  res.send('feed');
+  res.render('sidebar');
 });
 
 export default router;

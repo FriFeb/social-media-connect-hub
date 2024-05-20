@@ -5,7 +5,7 @@ router.get('/', (req, res) => {
   // get current user ID
   // retrieve all the chats where current user ID is involved
   // render the page
-  res.send('chats');
+  res.render('401');
 });
 
 router.get('/:id', (req, res) => {

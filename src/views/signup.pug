@@ -1,68 +1,44 @@
-doctype html
-head
-  meta(charset='UTF-8')
-  meta(name='viewport' content='width=device-width, initial-scale=1.0')
-  link(rel='stylesheet' href='/styles/styles.css')
-  script(src='/scripts/index.js' defer='')
-  title ConnectHub 
-.container
-  .image-side
-    .logo
-      img.logo-image(src='/images/logo.jpg' alt='')
-      p.logo-text Lorem Ipsum
-  .form-side
-    p.disclaimer Lorem ipsum dolor sit amet consectetur, adipisicing elit. Asperiores atque sit, quod harum deserunt! Vitae ratione optio deleniti, nihil similique, ipsa ea iure temporibus atque, molestiae ex rem voluptatem.
-    .form-container
-      h3.form-title It&apos;s time to register
-      form#reg-form.reg-form(method='POST')
-        .form-personal
-          .form-first-name
-            label(for='first-name') First Name
-            input#first-name(type='text' name='firstName' minlength='2' maxlength='40' pattern='^[A-Z].{1,39}' required='')
-            p.error
-          .form-second-name
-            label(for='second-name') Second Name
-            input#second-name(type='text' name='secondName' minlength='2' maxlength='40' pattern='^[A-Z].{1,39}' required='')
-            p.error
-        .form-social
-          .form-email
-            label(for='email') Email
-            input#email(type='email' name='email' minlength='3' maxlength='50' pattern='.{3,50}' required='')
-            p.error
-          .form-phone
-            label(for='phone') Phone Number
-            input#phone(type='tel' name='phone' minlength='12' maxlength='12' pattern='.{12}' required='')
-            p.error
-        .form-passwords
-          .pass-tooltip(hidden='')
-            p
-              img.tooltip-img(src='/images/red_cross.png' alt='')
-              | One capital letter!
-            p
-              img.tooltip-img(src='/images/red_cross.png' alt='')
-              | One lowercase letter!
-            p
-              img.tooltip-img(src='/images/red_cross.png' alt='')
-              | One digit!
-            p
-              img.tooltip-img(src='/images/red_cross.png' alt='')
-              | 6 to 30 characters in length!
-          .form-pass
-            label(for='pass') Password
-            .pass-container
-              input#pass(type='password' name='pass' minlength='6' maxlength='30' pattern='^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{6,30}' required='')
-              img.pass-eye(src='/images/eye.png' alt='')
-              img.pass-help(src='/images/question.png' alt='')
-            p.error
-          .form-confirm-pass
-            label(for='confirm-pass') Confirm Password
-            .pass-container
-              input#confirm-pass(type='password' name='confirmPass' minlength='6' maxlength='30' pattern='^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{6,30}' required='')
-              img.confirm-pass-eye(src='/images/eye.png' alt='')
-            p.error
-    .form-footer
-      button(type='submit' form='reg-form') Create Account
-      .log
-        p.log-text
-          | Already have an account?
-          a.log-link(href='') Log in
+extends layouts/layout
+
+block content
+    .container.vh-100
+        .row.h-100.justify-content-center.align-items-center.text-center
+            .col-lg-8.col-xl-6.my-3
+                .h1.fw-bold.mb-3.mb-lg-5 Create new account
+                form(method="post")
+                    .row.justify-content-center.mb-3.mb-md-4
+                        .col-4
+                            .mb-3.mb-md-4
+                                img#imageAvatar.w-100.rounded-circle(src='/avatars/default_user_image.jpeg')
+                        .col-12
+                            input#inputAvatar.form-control(type='file' onchange="imageAvatar.src = window.URL.createObjectURL(this.files[0])")
+                    .row.mb-3.mb-md-4
+                        .col-md-6
+                            .form-floating.mb-3.mb-md-0
+                                input#inputFirstName.form-control(type='text', placeholder='Enter your first name')
+                                label(for='inputFirstName') First name
+                        .col-md-6
+                            .form-floating
+                                input#inputSecondName.form-control(type='text', placeholder='Enter your second name')
+                                label(for='inputSecondName') Second name
+                    .form-floating.mb-3.mb-md-4
+                        input#inputNickname.form-control(type='text', placeholder='nickname')
+                        label(for='inputNickname') Nickname
+                    .form-floating.mb-3.mb-md-4
+                        input#inputEmail.form-control(type='email', placeholder='name@example.com')
+                        label(for='inputEmail') Email address
+                    .row
+                        .col-md-6
+                            .form-floating.mb-3.mb-md-0
+                                input#inputPassword.form-control(type='password', placeholder='Create a password')
+                                label(for='inputPassword') Password
+                        .col-md-6
+                            .form-floating.mb-3.mb-md-0
+                                input#inputPasswordConfirm.form-control(type='password', placeholder='Confirm password')
+                                label(for='inputPasswordConfirm') Confirm Password
+                    .mt-4.mb-2.d-block.text-center 
+                        .col-12
+                            button.btn.btn-primary.btn-block.w-100.fs-5.py-2 Sign Up
+                    .small.text-center
+                        p Have an account? 
+                            a(href="") Login

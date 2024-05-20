@@ -20,6 +20,40 @@ app.use(express.static(join(__dirname, 'static')));
 
 initRoutes(app);
 
+app.use((req, res) => {
+  res.status(404).render('errors/404');
+});
+
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
+
+/* 
+TODO: 
+
+  - Recreate templates with html and bootstrap
+    + signup
+    + login
+
+    + sidebar block
+    + header block
+
+    - message creation form
+    
+    - feed          
+    - messages      
+    - settings      
+    - user          
+    - contact form 
+
+    - admin panel
+
+  - Add bio section to the user instance
+  - Make fname and sname required
+
+  - Add forms instance to the db
+
+  - Check for the authentication on each page
+
+  - Make custom error pages (401, 404, 500)
+*/
