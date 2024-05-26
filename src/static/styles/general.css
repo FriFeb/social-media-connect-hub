@@ -1,0 +1,11 @@
+@media only screen and (max-width: 425px) {
+  #userNavigation {
+    width: calc(100vw - 118px);
+  }
+}
+
+@media only screen and (max-width: 991.98px) {
+  #adminTable {
+    width: calc(100vw - 100px);
+  }
+}

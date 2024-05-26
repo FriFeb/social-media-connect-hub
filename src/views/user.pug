@@ -1,0 +1,181 @@
+extends layouts/layout
+
+block content
+  .d-flex.flex-column.min-vh-100
+    nav.navbar.navbar-expand.sticky-top.bg-body-tertiary
+      .container-fluid
+        a.navbar-brand.p-3(href='/home')
+            span.fs-5.d-none.d-sm-inline ConnectHub
+            span.fs-5.d-sm-none CH
+        //- .navbar-nav.flex-row.ms-auto
+          a.nav-link(href='/login') 
+            button.btn.btn-primary.btn-block.py-2 Log In
+          a.nav-link(href='/signup') 
+            button.btn.btn-primary.btn-block.bg-transparent.text-body.py-2 Sign Up
+    .container-fluid.d-flex.flex-fill
+      .row.flex-fill
+        .col-auto.col-md-3.col-xl-2.bg-body-tertiary.p-3
+          .sticky-top.z-0(style={top: "94px"})
+            nav.nav.nav-pills.flex-column.w-100
+              a.nav-link.d-flex.align-items-center.text-black.w-100.px-3.mb-1(href='/home')
+                i.fs-4.bi-house.me-sm-1
+                span.ms-1.d-none.d-sm-inline Home
+              a.nav-link.d-flex.align-items-center.text-black.w-100.px-3.mb-1(href='/chats')
+                i.fs-4.bi-chat.me-sm-1
+                span.ms-1.d-none.d-sm-inline Messages
+              a.nav-link.d-flex.align-items-center.text-black.w-100.px-3.mb-1(href='/settings')
+                i.fs-4.bi-gear.me-sm-1
+                span.ms-1.d-none.d-sm-inline Settings
+              a.nav-link.active.d-flex.align-items-center.text-white.w-100.px-3.mb-1(href='/user/3')
+                i.fs-4.bi-person.me-sm-1
+                span.ms-1.d-none.d-sm-inline Profile
+              a.nav-link.d-flex.align-items-center.text-black.w-100.px-3.mb-1(href='/contact')
+                i.fs-4.bi-question-circle.me-sm-1
+                span.ms-1.d-none.d-sm-inline Contact Us
+              a.nav-link.d-flex.align-items-center.text-black.w-100.px-3.mb-1(href='')
+                i.fs-4.bi-pencil-square.me-sm-1
+                span.ms-1.d-none.d-sm-inline Admin panel
+        .col.d-flex.flex-column.p-3
+          .row 
+            .col-lg-8.offset-lg-2.col-xxl-6.offset-xxl-3
+              .row.align-items-center.mb-3
+                .col.col-sm-4.col-xl-3.mb-2
+                  img.img-fluid.rounded-circle(src="/avatars/default_user_avatar.jpeg")
+                .col-auto.flex-column.align-content-center
+                  h5.fw-bold John Doe 
+                  .muted @jonnie
+                .col.text-center.text-sm-end
+                  button.btn.btn-primary Add as friend
+                .w-100
+                .col.mt-2.px-2
+                  p Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae quas laborum excepturi consequatur modi officiis necessitatibus mollitia distinctio, quia, nulla earum similique illo officia minus. Officiis eaque a architecto nemo?
+              #userNavigation.nav.nav-pills.nav-fill.flex-nowrap.overflow-auto.text-center.gap-3.gap-md-5.mb-3
+                a.nav-link.rounded-5.active(href='') Posts
+                a.nav-link.rounded-5(href='') Friends
+                a.nav-link.rounded-5(href='') Comments
+              .flex-fill.py-3
+                .card.mb-3.mb-lg-4
+                  .card-header
+                    .row.align-items-center
+                      .col-2.col-xl-1
+                        img.img-fluid.rounded-circle.me-3(width='40px' src='/avatars/default_user_avatar.jpeg' alt='')
+                      .col
+                        .h5.m-0 John Doe
+                        .text-muted @jonnie
+                  .card-body
+                    .card-text Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo recusandae nulla rem eos ipsa praesentium esse magnam nemo dolor sequi fuga quia quaerat cum, obcaecati hic, molestias minima iste voluptates.
+                  .card-footer
+                    .row.align-items-center
+                      .col
+                        .nav
+                          a.nav-link.d-flex.align-items-center(href='')
+                            i.fs-5.bi-heart
+                            span.d-none.d-md-inline.ms-2 Like
+                          a.nav-link.d-flex.align-items-center(href='')
+                            i.fs-5.bi-chat-left-dots
+                            span.d-none.d-md-inline.ms-2 Comment
+                          a.nav-link.d-flex.align-items-center(href='')
+                            i.fs-5.bi-share-fill 
+                            span.d-none.d-md-inline.ms-2 Share
+                      .col-auto
+                        span 10 min ago
+                .card.mb-3.mb-lg-4
+                  .card-header
+                    .row.align-items-center
+                      .col-2.col-xl-1
+                        img.img-fluid.rounded-circle.me-3(width='40px' src='/avatars/default_user_avatar.jpeg' alt='')
+                      .col
+                        .h5.m-0 John Doe
+                        .text-muted @jonnie
+                  .card-body
+                    .card-text Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo recusandae nulla rem eos ipsa praesentium esse magnam nemo dolor sequi fuga quia quaerat cum, obcaecati hic, molestias minima iste voluptates.
+                  .card-footer
+                    .row.align-items-center
+                      .col
+                        .nav
+                          a.nav-link.d-flex.align-items-center(href='')
+                            i.fs-5.bi-heart
+                            span.d-none.d-md-inline.ms-2 Like
+                          a.nav-link.d-flex.align-items-center(href='')
+                            i.fs-5.bi-chat-left-dots
+                            span.d-none.d-md-inline.ms-2 Comment
+                          a.nav-link.d-flex.align-items-center(href='')
+                            i.fs-5.bi-share-fill 
+                            span.d-none.d-md-inline.ms-2 Share
+                      .col-auto
+                        span 10 min ago
+                .card.mb-3.mb-lg-4
+                  .card-header
+                    .row.align-items-center
+                      .col-2.col-xl-1
+                        img.img-fluid.rounded-circle.me-3(width='40px' src='/avatars/default_user_avatar.jpeg' alt='')
+                      .col
+                        .h5.m-0 John Doe
+                        .text-muted @jonnie
+                  .card-body
+                    .card-text Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo recusandae nulla rem eos ipsa praesentium esse magnam nemo dolor sequi fuga quia quaerat cum, obcaecati hic, molestias minima iste voluptates.
+                  .card-footer
+                    .row.align-items-center
+                      .col
+                        .nav
+                          a.nav-link.d-flex.align-items-center(href='')
+                            i.fs-5.bi-heart
+                            span.d-none.d-md-inline.ms-2 Like
+                          a.nav-link.d-flex.align-items-center(href='')
+                            i.fs-5.bi-chat-left-dots
+                            span.d-none.d-md-inline.ms-2 Comment
+                          a.nav-link.d-flex.align-items-center(href='')
+                            i.fs-5.bi-share-fill 
+                            span.d-none.d-md-inline.ms-2 Share
+                      .col-auto
+                        span 10 min ago
+                .card.mb-3.mb-lg-4
+                  .card-header
+                    .row.align-items-center
+                      .col-2.col-xl-1
+                        img.img-fluid.rounded-circle.me-3(width='40px' src='/avatars/default_user_avatar.jpeg' alt='')
+                      .col
+                        .h5.m-0 John Doe
+                        .text-muted @jonnie
+                  .card-body
+                    .card-text Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo recusandae nulla rem eos ipsa praesentium esse magnam nemo dolor sequi fuga quia quaerat cum, obcaecati hic, molestias minima iste voluptates.
+                  .card-footer
+                    .row.align-items-center
+                      .col
+                        .nav
+                          a.nav-link.d-flex.align-items-center(href='')
+                            i.fs-5.bi-heart
+                            span.d-none.d-md-inline.ms-2 Like
+                          a.nav-link.d-flex.align-items-center(href='')
+                            i.fs-5.bi-chat-left-dots
+                            span.d-none.d-md-inline.ms-2 Comment
+                          a.nav-link.d-flex.align-items-center(href='')
+                            i.fs-5.bi-share-fill 
+                            span.d-none.d-md-inline.ms-2 Share
+                      .col-auto
+                        span 10 min ago
+                .card.mb-3.mb-lg-4
+                  .card-header
+                    .row.align-items-center
+                      .col-2.col-xl-1
+                        img.img-fluid.rounded-circle.me-3(width='40px' src='/avatars/default_user_avatar.jpeg' alt='')
+                      .col
+                        .h5.m-0 John Doe
+                        .text-muted @jonnie
+                  .card-body
+                    .card-text Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo recusandae nulla rem eos ipsa praesentium esse magnam nemo dolor sequi fuga quia quaerat cum, obcaecati hic, molestias minima iste voluptates.
+                  .card-footer
+                    .row.align-items-center
+                      .col
+                        .nav
+                          a.nav-link.d-flex.align-items-center(href='')
+                            i.fs-5.bi-heart
+                            span.d-none.d-md-inline.ms-2 Like
+                          a.nav-link.d-flex.align-items-center(href='')
+                            i.fs-5.bi-chat-left-dots
+                            span.d-none.d-md-inline.ms-2 Comment
+                          a.nav-link.d-flex.align-items-center(href='')
+                            i.fs-5.bi-share-fill 
+                            span.d-none.d-md-inline.ms-2 Share
+                      .col-auto
+                        span 10 min ago
