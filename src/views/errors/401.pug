@@ -1,13 +1,10 @@
-extends layouts/error
+extends ../layouts/error
 
 block content
     .container
-        .row.justify-content-center
-            .col-lg-6
-                .text-center.mt-4
-                    h1.display-1 401
-                    p.lead Unauthorized
-                    p Access to this resource is denied.
-                    a(href='index.html')
-                        i.fas.fa-arrow-left.me-1
-                        | Return to Dashboard
+        .row.align-items-center.min-vh-100 
+            .text-center
+                h1.display-1 401
+                .lead Unauthorized
+                p Access to this resource is denied.
+                a(href='/home') Return to Home

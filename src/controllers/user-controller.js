@@ -1,4 +1,4 @@
-import { query } from '../helpers/database.js';
+import { query } from '../helpers/database-query.js';
 
 export const getUsers = async () => {
   const sql = `SELECT * FROM users`;

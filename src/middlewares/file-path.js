@@ -5,7 +5,7 @@ export const getAvatarPath = asyncHandler(async (req, res, next) => {
   const avatar = req.params?.avatar;
 
   if (!avatar) {
-    res.user.avatar = 'default_user_image.jpeg';
+    res.user.avatar = 'default_user_avatar.jpeg';
   } else {
     res.user.avatar = await uploadFile(avatar, '/../static/avatars');
   }

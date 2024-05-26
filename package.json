@@ -9,7 +9,6 @@
     "server": "webpack serve --open --config webpack.dev.js",
     "start": "node ./src/index.js",
     "startdev": "nodemon ./src/index.js",
-    "debug": "nodemon --inspect=localhost:3090/ ./src/index.js",
     "lint": "eslint src --fix"
   },
   "type": "module",
