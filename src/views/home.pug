@@ -28,112 +28,65 @@ block content
           .col-12.mb-2
             textarea.form-control(rows="3" placeholder='Share your thoughts ...')
           .col-auto
-            label(for="inputFile" style={cursor: "pointer"})
-                i.fs-5.bi-file-earmark-image
+            label#labelInputFile(for="inputFile" style={cursor: "pointer"})
+              i.fs-5.bi-file-earmark-image
             input#inputFile.form-control(type='file' hidden)
-          .col-auto
-            button(type="button").btn.p-0
-              i.fs-5.bi-emoji-smile
           .col-auto.ms-auto
             button.btn.btn-primary Share
         .flex-fill.pt-3
           .card.mb-3.mb-lg-4
             .card-header
               .row.align-items-center
-                .col-2.col-xl-1
-                  img.img-fluid.rounded-circle.me-3(width='40px' src='/avatars/default_user_avatar.jpeg' alt='')
+                .col-auto
+                  img.rounded-circle.me-3(width='40px' src='/avatars/default_user_avatar.jpeg' alt='')
                 .col
                   .h5.m-0 Miracles Lee Cross
                   .text-muted @LeeCross
+                .col-auto   
+                  button.btn.btn-close
             .card-body
-              .card-text Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo recusandae nulla rem eos ipsa praesentium esse magnam nemo dolor sequi fuga quia quaerat cum, obcaecati hic, molestias minima iste voluptates.
-            .card-footer
+              .card-text.mb-3 Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo recusandae nulla rem eos ipsa praesentium esse magnam nemo dolor sequi fuga quia quaerat cum, obcaecati hic, molestias minima iste voluptates.
               .row.align-items-center
                 .col
                   .nav
-                    a.nav-link.d-flex.align-items-center(href='')
-                      i.fs-5.bi-heart
-                      span.d-none.d-md-inline.ms-2 Like
-                    a.nav-link.d-flex.align-items-center(href='')
+                    a.nav-link.d-flex.align-items-center.p-2.p-sm-3(href='')
+                      i.fs-5.bi-heart-fill.me-1
+                      span.fs-5 2
+                    a.nav-link.d-flex.align-items-center.p-2.p-sm-3(href='')
                       i.fs-5.bi-chat-left-dots
-                      span.d-none.d-md-inline.ms-2 Comment
-                    a.nav-link.d-flex.align-items-center(href='')
-                      i.fs-5.bi-share-fill 
-                      span.d-none.d-md-inline.ms-2 Share
+                      span.d-none.d-sm-inline.ms-2 Comment
                 .col-auto
                   span 10 min ago
-          .card.mb-3.mb-lg-4
-            .card-header
-              .row.align-items-center
-                .col-2.col-xl-1
-                  img.img-fluid.rounded-circle.me-3(width='40px' src='/avatars/default_user_avatar.jpeg' alt='')
-                .col
-                  .h5.m-0 Miracles Lee Cross
-                  .text-muted @LeeCross
-            .card-body
-              .card-text Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo recusandae nulla rem eos ipsa praesentium esse magnam nemo dolor sequi fuga quia quaerat cum, obcaecati hic, molestias minima iste voluptates.
-            .card-footer
-              .row.align-items-center
-                .col
-                  .nav
-                    a.nav-link.d-flex.align-items-center(href='')
-                      i.fs-5.bi-heart
-                      span.d-none.d-md-inline.ms-2 Like
-                    a.nav-link.d-flex.align-items-center(href='')
-                      i.fs-5.bi-chat-left-dots
-                      span.d-none.d-md-inline.ms-2 Comment
-                    a.nav-link.d-flex.align-items-center(href='')
-                      i.fs-5.bi-share-fill 
-                      span.d-none.d-md-inline.ms-2 Share
-                .col-auto
-                  span 10 min ago
-          .card.mb-3.mb-lg-4
-            .card-header
-              .row.align-items-center
-                .col-2.col-xl-1
-                  img.img-fluid.rounded-circle.me-3(width='40px' src='/avatars/default_user_avatar.jpeg' alt='')
-                .col
-                  .h5.m-0 Miracles Lee Cross
-                  .text-muted @LeeCross
-            .card-body
-              .card-text Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo recusandae nulla rem eos ipsa praesentium esse magnam nemo dolor sequi fuga quia quaerat cum, obcaecati hic, molestias minima iste voluptates.
-            .card-footer
-              .row.align-items-center
-                .col
-                  .nav
-                    a.nav-link.d-flex.align-items-center(href='')
-                      i.fs-5.bi-heart
-                      span.d-none.d-md-inline.ms-2 Like
-                    a.nav-link.d-flex.align-items-center(href='')
-                      i.fs-5.bi-chat-left-dots
-                      span.d-none.d-md-inline.ms-2 Comment
-                    a.nav-link.d-flex.align-items-center(href='')
-                      i.fs-5.bi-share-fill 
-                      span.d-none.d-md-inline.ms-2 Share
-                .col-auto
-                  span 10 min ago
-          .card.mb-3.mb-lg-4
-            .card-header
-              .row.align-items-center
-                .col-2.col-xl-1
-                  img.img-fluid.rounded-circle.me-3(width='40px' src='/avatars/default_user_avatar.jpeg' alt='')
-                .col
-                  .h5.m-0 Miracles Lee Cross
-                  .text-muted @LeeCross
-            .card-body
-              .card-text Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo recusandae nulla rem eos ipsa praesentium esse magnam nemo dolor sequi fuga quia quaerat cum, obcaecati hic, molestias minima iste voluptates.
-            .card-footer
-              .row.align-items-center
-                .col
-                  .nav
-                    a.nav-link.d-flex.align-items-center(href='')
-                      i.fs-5.bi-heart
-                      span.d-none.d-md-inline.ms-2 Like
-                    a.nav-link.d-flex.align-items-center(href='')
-                      i.fs-5.bi-chat-left-dots
-                      span.d-none.d-md-inline.ms-2 Comment
-                    a.nav-link.d-flex.align-items-center(href='')
-                      i.fs-5.bi-share-fill 
-                      span.d-none.d-md-inline.ms-2 Share
-                .col-auto
-                  span 10 min ago
+            .card-footer.p-3
+                .row.mb-3
+                  .col-auto
+                    img.rounded-circle.me-3(width='40px' src='https://i.imgur.com/RpzrMR2.jpg' alt='')
+                  .col.row
+                    .col-12
+                      span.h5.m-0 Fedir Denysenko 
+                      span.text-muted @Fedde
+                    .col-12
+                      div Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit illo beatae sit dignissimos eligendi culpa sed eos a, ipsum pariatur vel illum quas libero unde aliquam accusamus delectus laboriosam quia!
+                  .col-auto   
+                    button.btn.btn-close
+                  .w-100 
+                  .col-auto
+                    img.rounded-circle.opacity-0(width='40px' src='https://i.imgur.com/RpzrMR2.jpg' alt='')
+                  .col
+                    .nav
+                      a.nav-link.d-flex.align-items-center.p-2.p-sm-3(href='')
+                        i.fs-5.bi-heart-fill.me-1
+                        span.fs-5 2
+                  .col-auto.align-content-center
+                      div 10 min ago
+                .row
+                  .col-auto   
+                    img.rounded-circle(src='https://i.imgur.com/RpzrMR2.jpg' width='40')
+                  .col.row 
+                    .col-12.mb-1
+                      textarea.form-control
+                    .col-12
+                      .mt-2.text-right
+                        button.btn.btn-sm.btn-primary.me-3 Post comment
+                        button.btn.btn-sm.btn-outline-primary Cancel
+

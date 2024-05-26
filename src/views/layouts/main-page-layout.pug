@@ -20,7 +20,7 @@ html(lang="en")
           a.nav-link(href='/signup') 
             button.btn.btn-primary.btn-block.bg-transparent.text-body.py-2 Sign Up
     .container-fluid
-        .row
+        .row(style={"min-height": "calc(100vh - 78px)"})
           block content
     #adminPanel.modal.fade(tabindex='-1')
       .modal-dialog.modal-fullscreen.modal-dialog-scrollable

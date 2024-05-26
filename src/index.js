@@ -26,12 +26,7 @@ app.listen(port, () => {
 
 /* 
 TODO: 
-
-  - add the ability to view users, posts, forms details for admin
-  - comment section on post
   - show different users
-  + page layout block
 
   - Add form validation
-
 */
