@@ -27,24 +27,11 @@ app.listen(port, () => {
 /* 
 TODO: 
 
-  - Recreate templates with html and bootstrap
-    + signup
-    + login
-
-    + sidebar block
-    + header block
-
-    + home          
-    + messages      
-    + settings      
-    + user          
-    - contact form 
-
-    - admin panel
-
-  - Commit changes
+  - add the ability to view users, posts, forms details for admin
+  - comment section on post
+  - show different users
+  + page layout block
 
   - Add form validation
 
-  - Check for the authentication on each page
 */

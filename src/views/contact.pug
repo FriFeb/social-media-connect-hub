@@ -1,0 +1,38 @@
+extends layouts/main-page-layout
+
+block content
+  .col-auto.col-md-3.col-xl-2.bg-body-tertiary.p-3
+    nav.nav.nav-pills.flex-column.gap-1.sticky-top(style={top: "94px"})
+      a.nav-link.d-flex.align-items-center.text-black(href='/home')
+        i.fs-4.bi-house.me-md-1
+        span.ms-1.d-none.d-md-inline Home
+      a.nav-link.d-flex.align-items-center.text-black(href='/chats')
+        i.fs-4.bi-chat.me-md-1
+        span.ms-1.d-none.d-md-inline Messages
+      a.nav-link.d-flex.align-items-center.text-black(href='/settings')
+        i.fs-4.bi-gear.me-md-1
+        span.ms-1.d-none.d-md-inline Settings
+      a.nav-link.d-flex.align-items-center.text-black(href='/user/3')
+        i.fs-4.bi-person.me-md-1
+        span.ms-1.d-none.d-md-inline Profile
+      a.nav-link.active.d-flex.align-items-center.text-white(href='/contact')
+        i.fs-4.bi-question-circle.me-md-1
+        span.ms-1.d-none.d-md-inline Contact Us
+      a.nav-link.d-flex.align-items-center.text-black(href='' data-bs-toggle='modal' data-bs-target='#adminPanel') 
+        i.fs-4.bi-pencil-square.me-md-1
+        span.ms-1.d-none.d-md-inline Admin panel
+  .col.p-3
+    .col-lg-8.offset-lg-2.col-xxl-6.offset-xxl-3
+      form.d-flex.flex-column.justify-content-center(method='post' novalidate style={"min-height": "calc(100vh - 110px)"})
+        .mb-3.mb-md-4
+          label.form-label(for='inputSubject') Subject
+          input#inputSubject.form-control(type='text' name='subject' placeholder='Your subject')
+        .mb-1
+          label.form-label(for='inputMessage') Message *
+          textarea#inputMessage.form-control(name='message' cols='30' rows='4' placeholder='Write your message')
+        .mb-5
+          label(for="inputFile")
+          input#inputFile.form-control(type='file' name="file")
+        .row.justify-content-center
+          .col-md-5.text-center
+            button.btn.btn-block.btn-primary.rounded-0.py-2.px-4 Send Message
