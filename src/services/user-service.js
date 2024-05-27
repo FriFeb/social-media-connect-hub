@@ -5,7 +5,7 @@ export const getUsers = async () => {
 
   const result = await query(sql);
 
-  return JSON.stringify(result);
+  return result;
 };
 
 export const getUser = async (id) => {
@@ -13,7 +13,7 @@ export const getUser = async (id) => {
 
   const result = await query(sql, id);
 
-  return JSON.stringify(result);
+  return result;
 };
 
 export const createUser = async (user) => {
@@ -32,7 +32,7 @@ export const createUser = async (user) => {
 
   const result = await query(sql, values);
 
-  return JSON.stringify(result);
+  return result;
 };
 
 export const updateUser = async (user) => {
@@ -53,7 +53,7 @@ export const updateUser = async (user) => {
 
   const result = await query(sql, values);
 
-  return JSON.stringify(result);
+  return result;
 };
 
 export const deleteUser = async (id) => {
@@ -61,5 +61,5 @@ export const deleteUser = async (id) => {
 
   const result = await query(sql, id);
 
-  return JSON.stringify(result);
+  return result;
 };

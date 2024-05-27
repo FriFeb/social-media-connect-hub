@@ -3,7 +3,7 @@ import { validateUser } from '../middlewares/user-validation.js';
 import { getAvatarPath } from '../middlewares/file-path.js';
 import { hashPassword } from '../middlewares/password-hash.js';
 import asyncHandler from 'express-async-handler';
-import { createUser, getUsers } from '../controllers/user-controller.js';
+import { createUser, getUsers } from '../services/user-service.js';
 
 const router = express.Router();
 
@@ -17,25 +17,17 @@ router.get('/', (req, res) => {
 // Redirect to the feed
 router.post(
   '/',
-  validateUser,
-  getAvatarPath,
-  hashPassword,
-  async (req, res, next) => {
-    try {
-      const user = await createUser(req, res);
-
-      const parsedUser = JSON.parse(user);
-      const userId = parsedUser.insertId;
-
-      res.render('feed', { userId });
-    } catch (error) {
-      next();
-    }
-  }
+  asyncHandler(async (req, res, next) => {
+    const response = await fetch('http://localhost:3080/api/users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(req.body),
+    });
+    if (response.error) throw new Error(response.message);
+    res.redirect('/home');
+  })
 );
-
-router.use('/', (req, res) => {
-  res.status(500).render('errors/500');
-});
 
 export default router;

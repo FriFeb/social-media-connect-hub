@@ -5,6 +5,7 @@ import chatRouter from './chats.js';
 import settingsRouter from './settings.js';
 import userRouter from './user.js';
 import contactRouter from './contact.js';
+import apiRouter from './api.js';
 
 const initRoutes = (app) => {
   app.use('/signup', sighUpRouter);
@@ -14,6 +15,7 @@ const initRoutes = (app) => {
   app.use('/settings', settingsRouter);
   app.use('/user', userRouter);
   app.use('/contact', contactRouter);
+  app.use('/api', apiRouter);
   app.get('/', (req, res) => {
     res.redirect('/home');
   });

@@ -1,11 +1,11 @@
-import { query } from '../helpers/database.js';
+import { query } from '../helpers/database-query.js';
 
 export const getPosts = async () => {
   const sql = `SELECT * FROM posts`;
 
   const result = await query(sql);
 
-  return JSON.stringify(result);
+  return result;
 };
 
 export const getPost = async (id) => {
@@ -13,7 +13,7 @@ export const getPost = async (id) => {
 
   const result = await query(sql, id);
 
-  return JSON.stringify(result);
+  return result;
 };
 
 export const createPost = async (post) => {
@@ -25,7 +25,7 @@ export const createPost = async (post) => {
 
   const result = await query(sql, values);
 
-  return JSON.stringify(result);
+  return result;
 };
 
 export const updatePost = async (post) => {
@@ -38,7 +38,7 @@ export const updatePost = async (post) => {
 
   const result = await query(sql, values);
 
-  return JSON.stringify(result);
+  return result;
 };
 
 export const deletePost = async (id) => {
@@ -46,5 +46,5 @@ export const deletePost = async (id) => {
 
   const result = await query(sql, id);
 
-  return JSON.stringify(result);
+  return result;
 };

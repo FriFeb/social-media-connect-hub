@@ -1,4 +1,4 @@
-export default (err, req, res, next) => {
+export const handleServerError = (err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).send(err.message);
+  res.status(500).render('errors/500');
 };
