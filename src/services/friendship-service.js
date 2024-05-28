@@ -1,11 +1,22 @@
-import { query } from '../helpers/database.js';
+import { query } from '../helpers/database-query.js';
+
+export const getUserFriends = async (id) => {
+  const sql = `
+  SELECT source_id AS 'friend_id' FROM friendships WHERE target_id = ?
+  UNION 
+  SELECT target_id AS 'friend_id' FROM friendships WHERE source_id = ? `;
+
+  const result = await query(sql, [id, id]);
+
+  return result;
+};
 
 export const getFriendships = async () => {
   const sql = `SELECT * FROM friendships`;
 
   const result = await query(sql);
 
-  return JSON.stringify(result);
+  return result;
 };
 
 export const getFriendship = async (id) => {
@@ -13,7 +24,7 @@ export const getFriendship = async (id) => {
 
   const result = await query(sql, id);
 
-  return JSON.stringify(result);
+  return result;
 };
 
 export const createFriendship = async (friendship) => {
@@ -25,7 +36,7 @@ export const createFriendship = async (friendship) => {
 
   const result = await query(sql, values);
 
-  return JSON.stringify(result);
+  return result;
 };
 
 export const updateFriendship = async (friendship) => {
@@ -38,7 +49,7 @@ export const updateFriendship = async (friendship) => {
 
   const result = await query(sql, values);
 
-  return JSON.stringify(result);
+  return result;
 };
 
 export const deleteFriendship = async (id) => {
@@ -46,5 +57,5 @@ export const deleteFriendship = async (id) => {
 
   const result = await query(sql, id);
 
-  return JSON.stringify(result);
+  return result;
 };

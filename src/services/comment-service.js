@@ -1,11 +1,27 @@
-import { query } from '../helpers/database.js';
+import { query } from '../helpers/database-query.js';
 
 export const getComments = async () => {
   const sql = `SELECT * FROM comments`;
 
   const result = await query(sql);
 
-  return JSON.stringify(result);
+  return result;
+};
+
+export const getPostComments = async (id) => {
+  const sql = `SELECT * FROM comments WHERE post_id = ?`;
+
+  const result = await query(sql, id);
+
+  return result;
+};
+
+export const getUserComments = async (id) => {
+  const sql = `SELECT * FROM comments WHERE author_id = ?`;
+
+  const result = await query(sql, id);
+
+  return result;
 };
 
 export const getComment = async (id) => {
@@ -13,7 +29,7 @@ export const getComment = async (id) => {
 
   const result = await query(sql, id);
 
-  return JSON.stringify(result);
+  return result;
 };
 
 export const createComment = async (comment) => {
@@ -30,7 +46,7 @@ export const createComment = async (comment) => {
 
   const result = await query(sql, values);
 
-  return JSON.stringify(result);
+  return result;
 };
 
 export const updateComment = async (comment) => {
@@ -49,7 +65,7 @@ export const updateComment = async (comment) => {
 
   const result = await query(sql, values);
 
-  return JSON.stringify(result);
+  return result;
 };
 
 export const deleteComment = async (id) => {
@@ -57,5 +73,5 @@ export const deleteComment = async (id) => {
 
   const result = await query(sql, id);
 
-  return JSON.stringify(result);
+  return result;
 };

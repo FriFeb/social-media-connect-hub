@@ -1,11 +1,27 @@
-import { query } from '../helpers/database.js';
+import { query } from '../helpers/database-query.js';
 
 export const getMessages = async () => {
   const sql = `SELECT * FROM messages`;
 
   const result = await query(sql);
 
-  return JSON.stringify(result);
+  return result;
+};
+
+export const getChatMessages = async (id) => {
+  const sql = `SELECT * FROM messages WHERE chat_id = ?`;
+
+  const result = await query(sql, id);
+
+  return result;
+};
+
+export const getUserChatMessages = async (userId, chatId) => {
+  const sql = `SELECT * FROM messages WHERE author_id = ? AND chat_id = ?`;
+
+  const result = await query(sql, [userId, chatId]);
+
+  return result;
 };
 
 export const getMessage = async (id) => {
@@ -13,7 +29,7 @@ export const getMessage = async (id) => {
 
   const result = await query(sql, id);
 
-  return JSON.stringify(result);
+  return result;
 };
 
 export const createMessage = async (message) => {
@@ -30,7 +46,7 @@ export const createMessage = async (message) => {
 
   const result = await query(sql, values);
 
-  return JSON.stringify(result);
+  return result;
 };
 
 export const updateMessage = async (message) => {
@@ -49,7 +65,7 @@ export const updateMessage = async (message) => {
 
   const result = await query(sql, values);
 
-  return JSON.stringify(result);
+  return result;
 };
 
 export const deleteMessage = async (id) => {
@@ -57,5 +73,5 @@ export const deleteMessage = async (id) => {
 
   const result = await query(sql, id);
 
-  return JSON.stringify(result);
+  return result;
 };

@@ -8,6 +8,14 @@ export const getPosts = async () => {
   return result;
 };
 
+export const getUserPosts = async (id) => {
+  const sql = `SELECT * FROM posts WHERE author_id = ?`;
+
+  const result = await query(sql, id);
+
+  return result;
+};
+
 export const getPost = async (id) => {
   const sql = `SELECT * FROM posts WHERE post_id = ?`;
 

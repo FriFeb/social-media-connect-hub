@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
 // Redirect to the feed
 router.post(
   '/',
-  asyncHandler(async (req, res, next) => {
+  asyncHandler(async (req, res) => {
     const response = await fetch('http://localhost:3080/api/users', {
       method: 'POST',
       headers: {

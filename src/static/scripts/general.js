@@ -30,7 +30,6 @@ function createPostElement(post) {
     <td>${post.text}</td>
     <td><img src="/files/${post.attachment}" style="width:64px;"</td>
     <td>${post.likes}</td>
-    <td>${post.comments}</td>
     <td>
         <nav class="nav flex-nowrap justify-content-center">
           <a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#postPanel">
@@ -88,13 +87,15 @@ async function makeRequest(url) {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-  const users = await makeRequest('http://localhost:3080/api/users');
-  const posts = await makeRequest('http://localhost:3080/api/posts');
-  // const forms = wait makeRequest('http://localhost:3080/api/forms');
+  const [users, posts, forms] = await Promise.all([
+    makeRequest('http://localhost:3080/api/users'),
+    makeRequest('http://localhost:3080/api/posts'),
+    makeRequest('http://localhost:3080/api/forms'),
+  ]);
 
   const userElements = createEntityElements('users', users);
   const postElements = createEntityElements('posts', posts);
-  // const formElements = createEntityElements('forms', forms);
+  const formElements = createEntityElements('forms', forms);
 
   document.querySelector('#usersTable tbody').innerHTML = userElements.join('');
   document.querySelector('#userNumber').innerHTML = userElements.length;
@@ -102,8 +103,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.querySelector('#postsTable tbody').innerHTML = postElements.join('');
   document.querySelector('#postNumber').innerHTML = postElements.length;
 
-  // document.querySelector('#formsTable tbody').innerHTML = formElements.join('');
-  // document.querySelector('#formNumber').innerHTML = formElements.length;
+  document.querySelector('#formsTable tbody').innerHTML = formElements.join('');
+  document.querySelector('#formNumber').innerHTML = formElements.length;
 });
 
 function removeActiveLinks() {

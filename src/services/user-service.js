@@ -1,7 +1,7 @@
 import { query } from '../helpers/database-query.js';
 
 export const getUsers = async () => {
-  const sql = `SELECT * FROM users`;
+  const sql = `SELECT user_id, email, nickname, avatar, registration_time, first_name, second_name, biography FROM users`;
 
   const result = await query(sql);
 
@@ -9,7 +9,7 @@ export const getUsers = async () => {
 };
 
 export const getUser = async (id) => {
-  const sql = `SELECT * FROM users WHERE user_id = ?`;
+  const sql = `SELECT user_id, email, nickname, avatar, registration_time, first_name, second_name, biography FROM users WHERE user_id = ?`;
 
   const result = await query(sql, id);
 
