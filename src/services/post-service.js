@@ -1,7 +1,7 @@
 import { query } from '../helpers/database-query.js';
 
 export const getPosts = async () => {
-  const sql = `SELECT * FROM posts`;
+  const sql = `SELECT * FROM posts ORDER BY creation_time DESC`;
 
   const result = await query(sql);
 
@@ -9,7 +9,7 @@ export const getPosts = async () => {
 };
 
 export const getUserPosts = async (id) => {
-  const sql = `SELECT * FROM posts WHERE author_id = ?`;
+  const sql = `SELECT * FROM posts WHERE author_id = ? ORDER BY creation_time DESC`;
 
   const result = await query(sql, id);
 
@@ -45,6 +45,28 @@ export const updatePost = async (post) => {
   const values = [post.text, post.attachment, post.authorId, post.id];
 
   const result = await query(sql, values);
+
+  return result;
+};
+
+export const likePost = async (id) => {
+  const sql = `
+  UPDATE posts 
+  SET likes_number = likes_number + 1
+  WHERE post_id=?`;
+
+  const result = await query(sql, id);
+
+  return result;
+};
+
+export const unlikePost = async (id) => {
+  const sql = `
+  UPDATE posts 
+  SET likes_number = likes_number - 1
+  WHERE post_id=?`;
+
+  const result = await query(sql, id);
 
   return result;
 };

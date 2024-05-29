@@ -1,26 +1,6 @@
 extends layouts/main-page-layout
 
 block content
-  .col-auto.col-md-3.col-xl-2.bg-body-tertiary.p-3
-    nav.nav.nav-pills.flex-column.gap-1.sticky-top(style={top: "94px"})
-      a.nav-link.active.d-flex.align-items-center.text-white(href='/home')
-        i.fs-4.bi-house.me-md-1
-        span.ms-1.d-none.d-md-inline Home
-      a.nav-link.d-flex.align-items-center.text-black(href='/chats')
-        i.fs-4.bi-chat.me-md-1
-        span.ms-1.d-none.d-md-inline Messages
-      a.nav-link.d-flex.align-items-center.text-black(href='/settings')
-        i.fs-4.bi-gear.me-md-1
-        span.ms-1.d-none.d-md-inline Settings
-      a.nav-link.d-flex.align-items-center.text-black(href='/user/3')
-        i.fs-4.bi-person.me-md-1
-        span.ms-1.d-none.d-md-inline Profile
-      a.nav-link.d-flex.align-items-center.text-black(href='/contact')
-        i.fs-4.bi-question-circle.me-md-1
-        span.ms-1.d-none.d-md-inline Contact Us
-      a.nav-link.d-flex.align-items-center.text-black(href='' data-bs-toggle='modal' data-bs-target='#adminPanel') 
-        i.fs-4.bi-pencil-square.me-md-1
-        span.ms-1.d-none.d-md-inline Admin panel
   .col.d-flex.flex-column.p-3
     .row 
       .col-lg-8.offset-lg-2.col-xxl-6.offset-xxl-3
@@ -33,53 +13,53 @@ block content
             input#inputFile.form-control(type='file' hidden)
           .col-auto.ms-auto
             button.btn.btn-primary Share
-        .flex-fill.pt-3
-          .card.mb-3.mb-lg-4
-            .card-header
-              .row.align-items-center
-                .col-auto
-                  img.rounded-circle.me-3(width='40px' src='/avatars/default_user_avatar.jpeg' alt='')
-                .col
-                  .h5.m-0 Miracles Lee Cross
-                  .text-muted @LeeCross
-                .col-auto   
-                  button.btn.btn-close
-            .card-body
-              .card-text.mb-3 Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo recusandae nulla rem eos ipsa praesentium esse magnam nemo dolor sequi fuga quia quaerat cum, obcaecati hic, molestias minima iste voluptates.
-              hr.m-0
-              .row.align-items-center
-                .col
-                  .nav
-                    a.nav-link.d-flex.align-items-center.p-2.p-sm-3(href='')
-                      i.fs-5.bi-heart-fill.me-1
-                      span.fs-5 2
-                    a.nav-link.d-flex.align-items-center.p-2.p-sm-3(href='')
-                      i.fs-5.bi-chat-left-dots
-                      span.d-none.d-sm-inline.ms-2 Comment
-                .col-auto
-                  span 10 min ago
-            .card-footer.d-none.p-3
-                .row.mb-3
+        #posts.flex-fill.pt-3
+          each post in posts 
+            .card.mb-3.mb-lg-4
+              .card-header
+                .row.align-items-center
                   .col-auto
-                    img.rounded-circle.me-3(width='40px' src='https://i.imgur.com/RpzrMR2.jpg' alt='')
-                  .col.row
-                    .col-12
-                      span.h5.m-0 Fedir Denysenko 
-                      span.text-muted @Fedde
-                    .col-12
-                      div Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit illo beatae sit dignissimos eligendi culpa sed eos a, ipsum pariatur vel illum quas libero unde aliquam accusamus delectus laboriosam quia!
-                  .col-auto   
-                    button.btn.btn-close
-                  .w-100 
-                  .col-auto
-                    img.rounded-circle.opacity-0(width='40px' src='https://i.imgur.com/RpzrMR2.jpg' alt='')
+                    img.rounded-circle.me-3(width='40px' src=`/avatars/${post.author_avatar}` alt='')
+                  .col
+                    .h5.m-0 #{post.author_first_name} #{author_second_name}
+                    .text-muted @#{post.author_nickname}
+              .card-body.pb-0
+                .card-text.mb-3 #{post.text}
+                hr.m-0
+                .row.align-items-center
                   .col
                     .nav
-                      a.nav-link.d-flex.align-items-center.p-2.p-sm-3(href='')
-                        i.fs-5.bi-heart-fill.me-1
-                        span.fs-5 2
-                  .col-auto.align-content-center
-                      div 10 min ago
+                      button.post-like.nav-link.d-flex.align-items-center.p-2.p-sm-3 
+                        i.fs-5.bi-heart.me-1
+                        span.fs-5 #{post.likes_number}
+                      button.comment-toggle.nav-link.d-flex.align-items-center.p-2.p-sm-3
+                        i.fs-5.bi-chat-left-dots
+                        span.d-none.d-sm-inline.ms-2 Comment
+                  .col-auto
+                    span #{new Date(Date.parse(post.creation_time)).getHours()}:#{new Date(Date.parse(post.creation_time)).getMinutes()}:#{new Date(Date.parse(post.creation_time)).getSeconds()} #{new Date(Date.parse(post.creation_time)).getDate()}-#{new Date(Date.parse(post.creation_time)).getMonth() + 1}-#{new Date(Date.parse(post.creation_time)).getFullYear()}
+              .card-footer.d-none.p-3
+                each comment in post.comments
+                  .row.mb-3
+                    .col-auto
+                      img.rounded-circle.me-3(width='40px' src=`/avatars/${comment.author_avatar}` alt='')
+                    .col.row
+                      .col-12
+                        span.h5.m-0 #{comment.author_first_name} #{comment.author_second_name}
+                        span.text-muted @#{comment.author_nickname}
+                      .col-12
+                        div #{comment.text}
+                    .col-auto   
+                      button.btn.btn-close
+                    .w-100 
+                    .col-auto
+                      img.rounded-circle.opacity-0(width='40px' src=`/avatars/${comment.author_avatar}` alt='')
+                    .col
+                      .nav
+                        button.nav-link.d-flex.align-items-center.p-2.p-sm-3
+                          i.fs-5.bi-heart.me-1
+                          span.fs-5 2
+                    .col-auto.align-content-center
+                        span #{new Date(Date.parse(comment.creation_time)).getHours()}:#{new Date(Date.parse(comment.creation_time)).getMinutes()}:#{new Date(Date.parse(comment.creation_time)).getSeconds()} #{new Date(Date.parse(comment.creation_time)).getDate()}-#{new Date(Date.parse(comment.creation_time)).getMonth() + 1}-#{new Date(Date.parse(comment.creation_time)).getFullYear()}
                 .row
                   .col-auto   
                     img.rounded-circle(src='https://i.imgur.com/RpzrMR2.jpg' width='40')
@@ -89,5 +69,4 @@ block content
                     .col-12
                       .mt-2.text-right
                         button.btn.btn-sm.btn-primary.me-3 Post comment
-                        button.btn.btn-sm.btn-outline-primary Cancel
-
+  script(src="/scripts/home.js" type="module")

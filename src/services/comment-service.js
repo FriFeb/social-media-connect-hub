@@ -1,7 +1,7 @@
 import { query } from '../helpers/database-query.js';
 
 export const getComments = async () => {
-  const sql = `SELECT * FROM comments`;
+  const sql = `SELECT * FROM comments ORDER BY creation_time DESC`;
 
   const result = await query(sql);
 
@@ -17,7 +17,7 @@ export const getPostComments = async (id) => {
 };
 
 export const getUserComments = async (id) => {
-  const sql = `SELECT * FROM comments WHERE author_id = ?`;
+  const sql = `SELECT * FROM comments WHERE author_id = ? ORDER BY creation_time DESC`;
 
   const result = await query(sql, id);
 
@@ -64,6 +64,28 @@ export const updateComment = async (comment) => {
   ];
 
   const result = await query(sql, values);
+
+  return result;
+};
+
+export const likeComment = async (id) => {
+  const sql = `
+  UPDATE comments 
+  SET likes_number = likes_number + 1
+  WHERE comment_id=?`;
+
+  const result = await query(sql, id);
+
+  return result;
+};
+
+export const unlikeComment = async (id) => {
+  const sql = `
+  UPDATE comments 
+  SET likes_number = likes_number - 1
+  WHERE comment_id=?`;
+
+  const result = await query(sql, id);
 
   return result;
 };

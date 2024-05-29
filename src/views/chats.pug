@@ -1,26 +1,6 @@
 extends layouts/main-page-layout
 
 block content
-  .col-auto.col-md-3.col-xl-2.bg-body-tertiary.p-3
-    nav.nav.nav-pills.flex-column.gap-1.sticky-top(style={top: "94px"})
-      a.nav-link.d-flex.align-items-center.text-black(href='/home')
-        i.fs-4.bi-house.me-md-1
-        span.ms-1.d-none.d-md-inline Home
-      a.nav-link.active.d-flex.align-items-center.text-white(href='/chats')
-        i.fs-4.bi-chat.me-md-1
-        span.ms-1.d-none.d-md-inline Messages
-      a.nav-link.d-flex.align-items-center.text-black(href='/settings')
-        i.fs-4.bi-gear.me-md-1
-        span.ms-1.d-none.d-md-inline Settings
-      a.nav-link.d-flex.align-items-center.text-black(href='/user/3')
-        i.fs-4.bi-person.me-md-1
-        span.ms-1.d-none.d-md-inline Profile
-      a.nav-link.d-flex.align-items-center.text-black(href='/contact')
-        i.fs-4.bi-question-circle.me-md-1
-        span.ms-1.d-none.d-md-inline Contact Us
-      a.nav-link.d-flex.align-items-center.text-black(href='' data-bs-toggle='modal' data-bs-target='#adminPanel') 
-        i.fs-4.bi-pencil-square.me-md-1
-        span.ms-1.d-none.d-md-inline Admin panel
   .col.d-flex.flex-column.flex-lg-row.p-0(style={width: "1px", height: "calc(100vh - 78px)"})
     nav#chats.nav.nav-pills.flex-lg-column.px-lg-3.overflow-auto.flex-nowrap.border-end.border-bottom
       a.nav-link.active.d-flex.align-items-center.text-white.p-3.mb-1(href='#')
@@ -73,17 +53,4 @@ block content
         .py-3.text-white.text-end
           span.p-3.bg-primary Msg 3
       form(method="post").row.justify-content-center.align-items-center.px-3
-        .col-auto.d-none.d-md-inline 
-          img#userAvatar.rounded-circle(src='/avatars/default_user_avatar.jpeg' width="40px")
-        .col
-          input.form-control(type='text', placeholder='Type a message')
-        .col-auto.d-none.d-md-inline
-          label(for="inputFile" style={cursor: "pointer"})
-              i.fs-5.bi-file-earmark-image
-          input#inputFile.form-control(type='file' hidden)
-        .col-auto.d-none.d-md-inline
-          button(type="button").btn.p-0
-            i.fs-5.bi-emoji-smile
-        .col-auto
-          button.btn.p-0
-            i.fs-5.bi-send
+  script(src="/scripts/chats.js" type="module")

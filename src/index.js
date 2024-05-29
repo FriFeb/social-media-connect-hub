@@ -26,6 +26,17 @@ app.listen(port, () => {
 
 /* 
 TODO: 
+  - let the content on the pages to be loaded from db
+    + home (posts, comments)
+    - user profile
+    - chats (get all the chats)
+
+  - add the possibility to add content:
+    - user registration
+    - post creation
+    - comment creation
+    - admin form creation
+
   - show different users
 
   - Add form validation
