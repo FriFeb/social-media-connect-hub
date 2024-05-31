@@ -16,9 +16,9 @@ block content
           .col.mt-2.px-2
             p #{biography}
         #userNavigation.nav.nav-pills.nav-fill.flex-nowrap.overflow-auto.text-center.gap-3.gap-md-5.mb-3
-          a.nav-link.rounded-5.active Posts
-          a.nav-link.rounded-5 Friends
-          a.nav-link.rounded-5 Comments
+          a.nav-link.rounded-5.active(data-table-name="Posts") Posts
+          a.nav-link.rounded-5(data-table-name="Friends") Friends
+          a.nav-link.rounded-5(data-table-name="Comments") Comments
         #userContent.flex-fill.py-3
           #userPosts
             each post in posts 
@@ -41,9 +41,15 @@ block content
                           span.fs-5= post.likes_number
                     .col-auto
                       span #{new Date(Date.parse(post.creation_time)).getHours()}:#{new Date(Date.parse(post.creation_time)).getMinutes()}:#{new Date(Date.parse(post.creation_time)).getSeconds()} #{new Date(Date.parse(post.creation_time)).getDate()}-#{new Date(Date.parse(post.creation_time)).getMonth() + 1}-#{new Date(Date.parse(post.creation_time)).getFullYear()}
-          //- #userFriends
-          //-   each friend in friends
-          #userComment
+          #userFriends.d-none
+            each friend in friends
+              a.row.align-items-center.text-decoration-none.mb-3(href=`http://localhost:3080/user/${friend.user_id}`)
+                .col-auto
+                  img.rounded-circle.me-3(width='40px' src=`/avatars/${friend.avatar}` alt='')
+                .col
+                  .h5.m-0 #{friend.first_name} #{friend.second_name}
+                  .text-muted @#{friend.nickname}
+          #userComments.d-none
             each comment in comments
               .row.mb-3
                   .col-auto

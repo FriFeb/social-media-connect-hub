@@ -13,7 +13,7 @@ export const getUser = async (id) => {
 
   const result = await query(sql, id);
 
-  return result;
+  return result[0];
 };
 
 export const createUser = async (user) => {
@@ -23,7 +23,7 @@ export const createUser = async (user) => {
 
   const values = [
     user.email,
-    user.pass,
+    user.password,
     user.nickname,
     user.avatar,
     user.firstName,
@@ -38,13 +38,14 @@ export const createUser = async (user) => {
 export const updateUser = async (user) => {
   const sql = `
   UPDATE users 
-  SET email=?,password=?,nickname=?,avatar=?,first_name=?,second_name=? 
+  SET email=?,password=?,nickname=?,biography=?,avatar=?,first_name=?,second_name=? 
   WHERE user_id=?`;
 
   const values = [
     user.email,
-    user.pass,
+    user.password,
     user.nickname,
+    user.biography,
     user.avatar,
     user.firstName,
     user.secondName,

@@ -39,7 +39,7 @@ block content
         img(src="../avatars//default_user_avatar.jpeg" width="40px").rounded-circle  
         span.ms-2.d-none.d-lg-inline.fs-5 My friend
     .d-flex.flex-column.flex-fill.h-100.p-3
-      .flex-fill
+      .flex-fill.fs-5
         .py-3
           span.p-3.bg-body-tertiary Msg 1
         .py-3
@@ -53,4 +53,15 @@ block content
         .py-3.text-white.text-end
           span.p-3.bg-primary Msg 3
       form(method="post").row.justify-content-center.align-items-center.px-3
+        .col-auto.d-none.d-md-inline 
+          img#userAvatar.rounded-circle(src='/avatars/default_user_avatar.jpeg' width="40px")
+        .col
+          input.form-control(type='text', placeholder='Type a message')
+        .col-auto.d-none.d-md-inline
+          label(for="inputFile" style={cursor: "pointer"})
+              i.fs-5.bi-file-earmark-image
+          input#inputFile.form-control(type='file' hidden)
+        .col-auto
+          button.btn.p-0
+            i.fs-5.bi-send
   script(src="/scripts/chats.js" type="module")

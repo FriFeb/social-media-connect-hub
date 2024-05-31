@@ -1,8 +1,7 @@
 import { makeRequest } from './helpers.js';
 
 function createUserElement(user) {
-  return `<tr>
-    <th scope="row">${user.user_id}</th>
+  return `<tr data-user-id=${user.user_id}>
     <td><img class="rounded-circle" src="/avatars/${user.avatar}" style="width:64px;"></td>
     <td>${user.first_name}</td>
     <td>${user.second_name}</td>
@@ -10,14 +9,14 @@ function createUserElement(user) {
     <td>${user.biography}</td>
     <td>${user.email}</td>
     <td> 
-      <nav class="nav flex-nowrap justify-content-center">
-      <a class="nav-link" href="/users/${user.user_id}">
+      <nav class="nav flex-nowrap justify-content-center controls">
+      <a class="nav-link" href="/user/${user.user_id}">
         <i class="fs-5 bi-eye"></i>
       </a>
-      <a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#userPanel">
+      <a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#userPanel" data-action="edit">
         <i class="fs-5 bi-pencil"></i>
       </a>
-      <a class="nav-link" href="">
+      <a class="nav-link" href="" data-action="view">
         <i class="fs-5 bi-trash"></i>
       </a>
       </nav>
@@ -26,18 +25,17 @@ function createUserElement(user) {
 }
 
 function createPostElement(post) {
-  return `<tr>
-    <th scope="row">${post.post_id}</th>
+  return `<tr data-post-id=${post.post_id}>
     <td>${post.author_id}</td>
     <td>${post.text}</td>
     <td><img src="/files/${post.attachment}" style="width:64px;"</td>
     <td>${post.likes_number}</td>
     <td>
-        <nav class="nav flex-nowrap justify-content-center">
-          <a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#postPanel">
+        <nav class="nav flex-nowrap justify-content-center controls">
+          <a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#postPanel" data-action="edit">
             <i class="fs-5 bi-pencil"></i>
           </a>
-          <a class="nav-link" href="">
+          <a class="nav-link" href="" data-action="delete">
             <i class="fs-5 bi-trash"></i>
           </a>
         </nav>
@@ -46,19 +44,18 @@ function createPostElement(post) {
 }
 
 function createFormElement(form) {
-  return `<tr>
-    <th scope="row">${form.form_id}</th>
+  return `<tr data-form-id=${form.form_id}>
     <td>${form.author_id}</td>
     <td>${form.subject}</td>
     <td>${form.text}</td>
     <td><img src="/files/${form.attachment}" style="width:64px;" /></td>
     <td>${form.creation_time}</td>
     <td>
-      <nav class="nav flex-nowrap justify-content-center">
-        <a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#formPanel">
+      <nav class="nav flex-nowrap justify-content-center controls">
+        <a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#formPanel" data-action="edit">
           <i class="fs-5 bi-eye"></i>
         </a>
-        <a class="nav-link" href="">
+        <a class="nav-link" href="" data-action="delete">
           <i class="fs-5 bi-trash"></i>
         </a>
       </nav>
@@ -127,4 +124,29 @@ adminNav.addEventListener('click', (event) => {
 
   hideAdminTables();
   showProperAdminTable(navLink.dataset.tableName);
+});
+
+usersTable.addEventListener('click', async (event) => {
+  const target = event.target;
+
+  if (!target.closest('.controls')) return;
+
+  if (target.closest('[data-action="edit"]')) {
+    const userId = target.closest('tr').dataset.userId;
+    const endpoint = `http://localhost:3080/api/users/${userId}`;
+
+    const response = await fetch(endpoint);
+    const user = await response.json();
+
+    userPanelForm.action = endpoint;
+    imageAvatar.src = `/avatars/${user.avatar}`;
+    userInputFirstName.value = user.first_name;
+    userInputSecondName.value = user.second_name;
+    userInputNickname.value = user.nickname;
+    userInputBiography.value = user.biography;
+    userInputEmail.value = user.email;
+  }
+
+  if (target.closest('[data-action="delete"]')) {
+  }
 });

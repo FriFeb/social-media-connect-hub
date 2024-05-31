@@ -2,7 +2,7 @@ import asyncHandler from 'express-async-handler';
 import { uploadFile } from '../helpers/file-upload.js';
 
 export const getAvatarPath = asyncHandler(async (req, res, next) => {
-  const avatar = req.params?.avatar;
+  const avatar = req.files?.avatar;
 
   if (!avatar) {
     res.user.avatar = 'default_user_avatar.jpeg';

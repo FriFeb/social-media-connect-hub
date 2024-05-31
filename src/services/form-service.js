@@ -13,15 +13,15 @@ export const getForm = async (id) => {
 
   const result = await query(sql, id);
 
-  return result;
+  return result[0];
 };
 
 export const createForm = async (form) => {
   const sql = `
-  INSERT INTO forms (text, attachment, author_id) 
-  VALUES (?, ?, ?)`;
+  INSERT INTO forms (subject, text, attachment, author_id) 
+  VALUES (?, ?, ?, ?)`;
 
-  const values = [form.text, form.attachment, form.authorId];
+  const values = [form.subject, form.text, form.attachment, form.authorId];
 
   const result = await query(sql, values);
 

@@ -2,9 +2,9 @@ import { query } from '../helpers/database-query.js';
 
 export const getUserFriends = async (id) => {
   const sql = `
-  SELECT source_id AS 'friend_id' FROM friendships WHERE target_id = ?
+  SELECT source_id AS 'user_id' FROM friendships WHERE target_id = ?
   UNION 
-  SELECT target_id AS 'friend_id' FROM friendships WHERE source_id = ? `;
+  SELECT target_id AS 'user_id' FROM friendships WHERE source_id = ? `;
 
   const result = await query(sql, [id, id]);
 
@@ -24,7 +24,7 @@ export const getFriendship = async (id) => {
 
   const result = await query(sql, id);
 
-  return result;
+  return result[0];
 };
 
 export const createFriendship = async (friendship) => {

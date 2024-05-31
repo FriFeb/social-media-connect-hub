@@ -1,5 +1,10 @@
 import express from 'express';
-import { createUser, getUser, getUsers } from '../../services/user-service.js';
+import {
+  createUser,
+  getUser,
+  getUsers,
+  updateUser,
+} from '../../services/user-service.js';
 import { validateUser } from '../../middlewares/user-validation.js';
 import { getAvatarPath } from '../../middlewares/file-path.js';
 import { hashPassword } from '../../middlewares/password-hash.js';
@@ -96,6 +101,19 @@ router.post(
   asyncHandler(async (req, res) => {
     const insertData = await createUser(res.user);
     const user = await getUser(insertData.insertId);
+    res.json(user);
+  }),
+  responseMiddleware
+);
+
+router.put(
+  '/:id',
+  asyncHandler(async (req, res) => {
+    const userId = req.params.id;
+    const userData = req.body;
+    debugger;
+
+    const user = await updateUser(userId);
     res.json(user);
   }),
   responseMiddleware

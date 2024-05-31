@@ -4,24 +4,24 @@ block content
   .col.d-flex.flex-column.p-3
     .row 
       .col-lg-8.offset-lg-2.col-xxl-6.offset-xxl-3
-        form(method="post").row.justify-content-start.align-items-center.mb-3
+        form.row.justify-content-start.align-items-center.mb-3(action="http://localhost:3080/api/posts" method="post" enctype="multipart/form-data")
           .col-12.mb-2
-            textarea.form-control(rows="3" placeholder='Share your thoughts ...')
+            textarea.form-control(name="text" rows="3" placeholder='Share your thoughts ...')
           .col-auto
-            label#labelInputFile(for="inputFile" style={cursor: "pointer"})
+            label(for="inputFile" style={cursor: "pointer"})
               i.fs-5.bi-file-earmark-image
-            input#inputFile.form-control(type='file' hidden)
+            input#inputFile.form-control(type='file' name="attachment" accept=".jpg,.jpeg,.png,.gif" hidden)
           .col-auto.ms-auto
             button.btn.btn-primary Share
         #posts.flex-fill.pt-3
           each post in posts 
-            .card.mb-3.mb-lg-4
+            .card.mb-3.mb-lg-4(data-post-id=`${post.post_id}`)
               .card-header
                 .row.align-items-center
                   .col-auto
                     img.rounded-circle.me-3(width='40px' src=`/avatars/${post.author_avatar}` alt='')
                   .col
-                    .h5.m-0 #{post.author_first_name} #{author_second_name}
+                    .h5.m-0 #{post.author_first_name} #{post.author_second_name}
                     .text-muted @#{post.author_nickname}
               .card-body.pb-0
                 .card-text.mb-3 #{post.text}
@@ -45,10 +45,10 @@ block content
                     .col.row
                       .col-12
                         span.h5.m-0 #{comment.author_first_name} #{comment.author_second_name}
-                        span.text-muted @#{comment.author_nickname}
+                        span.text-muted  @#{comment.author_nickname}
                       .col-12
                         div #{comment.text}
-                    .col-auto   
+                    //- .col-auto   
                       button.btn.btn-close
                     .w-100 
                     .col-auto
@@ -57,16 +57,17 @@ block content
                       .nav
                         button.nav-link.d-flex.align-items-center.p-2.p-sm-3
                           i.fs-5.bi-heart.me-1
-                          span.fs-5 2
+                          span.fs-5 #{comment.likes_number}
                     .col-auto.align-content-center
                         span #{new Date(Date.parse(comment.creation_time)).getHours()}:#{new Date(Date.parse(comment.creation_time)).getMinutes()}:#{new Date(Date.parse(comment.creation_time)).getSeconds()} #{new Date(Date.parse(comment.creation_time)).getDate()}-#{new Date(Date.parse(comment.creation_time)).getMonth() + 1}-#{new Date(Date.parse(comment.creation_time)).getFullYear()}
                 .row
                   .col-auto   
-                    img.rounded-circle(src='https://i.imgur.com/RpzrMR2.jpg' width='40')
-                  .col.row 
-                    .col-12.mb-1
-                      textarea.form-control
-                    .col-12
-                      .mt-2.text-right
-                        button.btn.btn-sm.btn-primary.me-3 Post comment
+                    img.rounded-circle(src='https://i.imgur.com/F9Nf9Fx.jpeg' width='40')
+                  .col
+                    form.row(action="http://localhost:3080/api/comments" method="post" enctype="multipart/form-data") 
+                      .col-12.mb-1
+                        textarea.form-control(name="text")
+                      .col-12
+                        .mt-2.text-right
+                          button.btn.btn-sm.btn-primary.me-3 Post comment
   script(src="/scripts/home.js" type="module")

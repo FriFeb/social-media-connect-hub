@@ -69,7 +69,6 @@ html(lang="en")
                         span#userNumber 44
                       thead.sticky-top.text-center
                         tr
-                          th(scope='col') ID
                           th(scope='col') Avatar
                           th(scope='col') First name
                           th(scope='col') Second name
@@ -100,7 +99,6 @@ html(lang="en")
                         span#postNumber 13
                       thead.sticky-top.text-center
                         tr
-                          th(scope='col') ID
                           th(scope='col') Author ID
                           th(scope='col') Text
                           th(scope='col') Attachment
@@ -128,7 +126,6 @@ html(lang="en")
                         span#formNumber 2
                       thead.sticky-top.text-center
                         tr
-                          th(scope='col') ID
                           th(scope='col') Author ID
                           th(scope='col') Subject 
                           th(scope='col') Text
@@ -157,27 +154,30 @@ html(lang="en")
             h1#adminPanelLabel.modal-title.fs-5 User editor panel
             button.btn.btn-primary.ms-auto(data-bs-target='#adminPanel' data-bs-toggle='modal') Back to Admin panel
           .modal-body
-            form.d-flex.flex-column.justify-content-center.mb-3(method="put")
+            form#userPanelForm.d-flex.flex-column.justify-content-center.mb-3(action="http://localhost:3080/api/users/" method="put" enctype="multipart/form-data")
               .row.justify-content-center.mb-3.mb-md-4.text-center 
                 .col-4
                   .mb-3.mb-md-4
                     img#imageAvatar.w-100.rounded-circle(src='/avatars/default_user_avatar.jpeg')
                 .w-100
                 .col-4
-                  label.text-muted(for="inputAvatar" style={cursor: "pointer"}) Choose an avatar
-                  input#inputAvatar.form-control(type='file' onchange="imageAvatar.src = window.URL.createObjectURL(this.files[0])" hidden)
+                  label.text-muted(for="userInputAvatar" style={cursor: "pointer"}) Choose an avatar
+                  input#userInputAvatar.form-control(type='file' onchange="imageAvatar.src = window.URL.createObjectURL(this.files[0])" hidden)
               .mb-3.mb-md-4
-                label.form-label(for='inputFirstName') First name
-                input#inputFirstName.form-control(type='text')
+                label.form-label(for='userInputFirstName') First name
+                input#userInputFirstName.form-control(type='text')
               .mb-3.mb-md-4
-                label.form-label(for='inputSecondName') Second name
-                input#inputSecondName.form-control(type='text')
+                label.form-label(for='userInputSecondName') Second name
+                input#userInputSecondName.form-control(type='text')
               .mb-3.mb-md-4
-                label.form-label(for='inputNickname') Nickname
-                input#inputNickname.form-control(type='text')
+                label.form-label(for='userInputNickname') Nickname
+                input#userInputNickname.form-control(type='text')
               .mb-3.mb-md-4
-                label.form-label(for='inputEmail') Email
-                input#inputEmail.form-control(type='email')
+                label.form-label(for='userInputBiography') Biography
+                textarea#userInputBiography.form-control(type='text')
+              .mb-3.mb-md-4
+                label.form-label(for='userInputEmail') Email
+                input#userInputEmail.form-control(type='email')
               .mt-4.mb-2.d-block.text-center 
                 .col-12
                   button.btn.btn-primary.btn-block.w-100.fs-5.py-2 Save
@@ -188,21 +188,21 @@ html(lang="en")
             h1#adminPanelLabel.modal-title.fs-5 Post editor panel
             button.btn.btn-primary.ms-auto(data-bs-target='#adminPanel' data-bs-toggle='modal') Back to Admin panel
           .modal-body
-            form.d-flex.flex-column.justify-content-center.mb-3(method="put")
+            form.d-flex.flex-column.justify-content-center.mb-3(method="put" enctype="multipart/form-data")
               .row.justify-content-center.mb-3.mb-md-4.text-center 
                 .col-4
-                  label.text-muted(for="inputAvatar" style={cursor: "pointer"}) Attachment
-                  input#inputAvatar.form-control(type='file' onchange="imageAvatar.src = window.URL.createObjectURL(this.files[0])" hidden)
+                  label.text-muted(for="postInputAttachment" style={cursor: "pointer"}) Attachment
+                  input#postInputAttachment.form-control(type='file' onchange="imageAvatar.src = window.URL.createObjectURL(this.files[0])" hidden)
                 .w-100
                 .col-4
                   .mb-3.mb-md-4
-                    img#imageAvatar.w-100(src='/avatars/default_user_avatar.jpeg')
+                    img#postImageAttachment.w-100(src='/avatars/default_user_avatar.jpeg')
               .mb-3.mb-md-4
-                label.form-label(for='inputMessage') Text
-                textarea#inputMessage.form-control(cols='30' rows='4')
+                label.form-label(for='postInputMessage') Text
+                textarea#postInputMessage.form-control(cols='30' rows='4')
               .mb-3.mb-md-4
-                label.form-label(for='inputNickname') Likes
-                input#inputNickname.form-control(type='text')
+                label.form-label(for='postInputNickname') Likes
+                input#postInputNickname.form-control(type='text')
               .mt-4.mb-2.d-block.text-center 
                 .col-12
                   button.btn.btn-primary.btn-block.w-100.fs-5.py-2 Save
@@ -213,23 +213,23 @@ html(lang="en")
             h1#adminPanelLabel.modal-title.fs-5 Form reply panel
             button.btn.btn-primary.ms-auto(data-bs-target='#adminPanel' data-bs-toggle='modal') Back to Admin panel
           .modal-body
-            form.d-flex.flex-column.justify-content-center.mb-3(method="put")
+            form.d-flex.flex-column.justify-content-center.mb-3(method="put" enctype="multipart/form-data")
               .row.justify-content-center.mb-3.mb-md-4.text-center 
                 .col-4
-                  label.text-muted(for="inputFile") Attachment
+                  label.text-muted(for="formAttachment") Attachment
                 .w-100
                 .col-4
                   .mb-3.mb-md-4
-                    img#inputFile.w-100(src='/avatars/default_user_avatar.jpeg')
+                    img#formAttachment.w-100(src='/avatars/default_user_avatar.jpeg')
               .mb-3.mb-md-4
-                label.form-label(for='inputSubject') Subject
-                input#inputSubject.form-control(type="text" disabled)
+                label.form-label(for='formSubject') Subject
+                input#formSubject.form-control(type="text" disabled)
               .mb-3.mb-md-4
-                label.form-label(for='inputMessage') Text
-                textarea#inputMessage.form-control(cols='30' rows='4' disabled)
+                label.form-label(for='formMessage') Text
+                textarea#formMessage.form-control(cols='30' rows='4' disabled)
               .mb-3.mb-md-4
-                label.form-label(for='inputReply') Reply text
-                textarea#inputReply.form-control(cols='30' rows='4')
+                label.form-label(for='formInputReply') Reply text
+                textarea#formInputReply.form-control(cols='30' rows='4')
               .mt-4.mb-2.d-block.text-center 
                 .col-12
                   button.btn.btn-primary.btn-block.w-100.fs-5.py-2 Save

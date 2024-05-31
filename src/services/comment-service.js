@@ -29,7 +29,7 @@ export const getComment = async (id) => {
 
   const result = await query(sql, id);
 
-  return result;
+  return result[0];
 };
 
 export const createComment = async (comment) => {

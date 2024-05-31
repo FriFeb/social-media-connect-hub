@@ -12,18 +12,23 @@ router.get(
     const userId = req.params.id;
     const user = await getUser(userId);
 
-    if (!user.length) {
+    if (!user) {
       res.render('errors/404');
       return;
     }
 
-    const currentUser = user[0];
+    user.posts = await getUserPosts(userId);
+    user.comments = await getUserComments(userId);
 
-    currentUser.posts = await getUserPosts(userId);
-    currentUser.comments = await getUserComments(userId);
-    currentUser.friends = await getUserFriends(userId);
+    const friendIds = await getUserFriends(userId);
+    user.friends = await Promise.all(
+      friendIds.map(async (friendId) => {
+        const userId = friendId.user_id;
+        return await getUser(userId);
+      })
+    );
 
-    res.render('user', currentUser);
+    res.render('user', user);
   })
 );
 

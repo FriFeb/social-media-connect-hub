@@ -28,7 +28,7 @@ export const getChat = async (id) => {
 
   const result = await query(sql, id);
 
-  return result;
+  return result[0];
 };
 
 export const createChat = async (chat) => {

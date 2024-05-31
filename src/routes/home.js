@@ -8,7 +8,7 @@ const router = express.Router();
 async function getAuthorInfo(authorId) {
   const author = await getUser(authorId);
 
-  const { avatar, first_name, second_name, nickname } = author[0];
+  const { avatar, first_name, second_name, nickname } = author;
 
   return {
     author_avatar: avatar,
