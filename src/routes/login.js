@@ -9,17 +9,13 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  // Client will send his login info
-  // if user exist
-  //  redirect to feed and sign him in
-  // else
-  //  return the same page with error section and prefilled data
-
   const user = req.body;
 
   const userData = await getLoginUser(user);
+
   if (!userData) {
-    res.render('login');
+    const data = { login: user.login, isLoginFailed: true };
+    res.render('login', data);
     return;
   }
 

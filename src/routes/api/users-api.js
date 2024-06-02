@@ -16,6 +16,7 @@ import { getUserPosts } from '../../services/post-service.js';
 import { getUserComments } from '../../services/comment-service.js';
 import { getUserChats } from '../../services/chat-service.js';
 import { getUserChatMessages } from '../../services/message-service.js';
+import { getUserData } from '../../middlewares/fetch-data.js';
 const router = express.Router();
 
 router.get(
@@ -109,14 +110,15 @@ router.post(
 
 router.post(
   '/:id',
+  getUserData,
+  getAvatarPath,
   asyncHandler(async (req, res) => {
-    const userId = req.params.id;
-    const userData = req.body;
+    await updateUser(res.user);
 
-    const user = await updateUser(userId);
-    res.json(user);
-  }),
-  responseMiddleware
+    const newUserData = await getUser(res.user.user_id);
+
+    res.json(newUserData);
+  })
 );
 
 router.post(
@@ -126,6 +128,16 @@ router.post(
 
     await deleteUser(userId);
     res.cookie('user_id', '').redirect('/home');
+  }),
+  responseMiddleware
+);
+
+router.post(
+  '/:id/delete',
+  asyncHandler(async (req, res) => {
+    const userId = req.params.id;
+    const data = await deleteUser(userId);
+    res.json(data);
   }),
   responseMiddleware
 );

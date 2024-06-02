@@ -18,7 +18,9 @@ router.post(
   hashPassword,
   asyncHandler(async (req, res) => {
     const insertData = await createUser(res.user);
-    res.redirect(`/user/${insertData.insertId}`);
+    res
+      .cookie('user_id', insertData.insertId)
+      .redirect(`/user/${insertData.insertId}`);
   })
 );
 

@@ -42,6 +42,7 @@ block content
                       .text-muted @#{nickname}
                 .card-body.pb-0
                   .card-text.mb-3= post.text
+                  img(src=`/files/${post.attachment}` alt='')
                   hr.m-0
                   .row.align-items-center
                     .col

@@ -3,6 +3,10 @@ extends layouts/main-page-layout
 block content
   .col.d-flex.flex-column.flex-lg-row.p-0.overflow-auto.scroll-wrapper
     nav#chats.nav.nav-pills.flex-lg-column.px-lg-3.overflow-auto.flex-nowrap.border-end.border-bottom.col-auto.sticky-top.bg-body
+      if !chats.length
+        button.nav-link.d-flex.align-items-center.text-black.p-3.mb-1.opacity-0
+          img(src=`avatars/default_user_avatar.jpeg` width="40px").rounded-circle  
+          span.ms-2.d-none.d-lg-inline.fs-5 John Doe
       each chat in chats
         button.nav-link.d-flex.align-items-center.text-black.p-3.mb-1(data-chat-id=`${chat.chat_id}`)
           img(src=`avatars/${chat.friend.avatar}` width="40px").rounded-circle  

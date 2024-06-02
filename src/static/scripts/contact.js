@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 if (toastTrigger) {
-  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(liveToast);
+  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(contactToast);
   toastTrigger.addEventListener('click', () => {
     toastBootstrap.show();
   });

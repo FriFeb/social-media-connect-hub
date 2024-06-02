@@ -20,12 +20,11 @@ block content
             .card.mb-3.mb-lg-4(data-post-id=`${post.post_id}`)
               .card-header
                 .row.align-items-center
-                  a.row.align-items-center.text-decoration-none(href=`http://localhost:3080/user/${post.author_id}`)
-                    .col-auto
-                      img.rounded-circle(width='40px' src=`/avatars/${post.author_avatar}` alt='')
-                    .col
-                      .h5.m-0 #{post.author_first_name} #{post.author_second_name}
-                      .text-muted @#{post.author_nickname}
+                  .col-auto
+                    img.rounded-circle(width='40px' src=`/avatars/${post.author_avatar}` alt='')
+                  a.col-auto.align-items-center.text-decoration-none(href=`http://localhost:3080/user/${post.author_id}`)
+                    .h5.m-0 #{post.author_first_name} #{post.author_second_name}
+                    .text-muted @#{post.author_nickname}
               .card-body.pb-0
                 .row
                   .card-text.fs-5.mb-3 #{post.text}
@@ -34,9 +33,11 @@ block content
                 .row.align-items-center
                   .col
                     .nav
-                      button.post-like.nav-link.d-flex.align-items-center.ps-0.p-2
-                        i.fs-5.bi-heart.me-1
-                        span.fs-5 #{post.likes_number}
+                      form.post-like-form.d-flex(data-is-liked="")
+                        input(type='text' name="postId" value=`${post.post_id}` hidden)
+                        button.nav-link.d-flex.align-items-center.ps-0.p-2
+                          i.fs-5.bi-heart.me-1
+                          span.fs-5 #{post.likes_number}
                       button.comment-toggle.nav-link.d-flex.align-items-center.p-2.p-sm-3
                         i.fs-5.bi-chat-left-dots
                         span.d-none.d-sm-inline.ms-2 Comment
@@ -50,7 +51,7 @@ block content
                       img.rounded-circle(width='40px' src=`/avatars/${comment.author_avatar}` alt='')
                     .col.row
                       .col-12
-                        a.row.align-items-center.text-decoration-none(href=`http://localhost:3080/user/${comment.author_id}`)
+                        a.text-decoration-none(href=`http://localhost:3080/user/${comment.author_id}`)
                           span.h5.m-0 #{comment.author_first_name} #{comment.author_second_name}
                           span.text-muted  @#{comment.author_nickname}
                       .col-12
@@ -60,9 +61,11 @@ block content
                       img.rounded-circle.opacity-0(width='40px' src=`/avatars/${comment.author_avatar}` alt='')
                     .col
                       .nav
-                        button.nav-link.d-flex.align-items-center.ps-0.p-2
-                          i.fs-5.bi-heart.me-1
-                          span.fs-5 #{comment.likes_number}
+                        form.comment-like-form.d-flex(data-is-liked="")
+                          input(type='text' name="commentId" value=`${comment.comment_id}` hidden)
+                          button.nav-link.d-flex.align-items-center.ps-0.p-2
+                            i.fs-5.bi-heart.me-1
+                            span.fs-5 #{comment.likes_number}
                     .col-auto.align-content-center
                       - var date = String(new Date(Date.parse(comment.creation_time))).split(" ");
                       span #{date[4]} #{date[2]} #{date[1]} #{date[3]} 
@@ -71,7 +74,7 @@ block content
                     .col-auto   
                       img.rounded-circle(src=`/avatars/${avatar}` width='40')
                     .col
-                      form.commentForm.row(action="http://localhost:3080/api/comments" method="post" enctype="multipart/form-data") 
+                      form.comment-form.row(action="http://localhost:3080/api/comments" method="post" enctype="multipart/form-data") 
                         input(type='text' name="authorId" value=`${currentUserId}` hidden)
                         input(type='text' name="postId" value=`${post.post_id}` hidden)
                         .col-12.mb-1

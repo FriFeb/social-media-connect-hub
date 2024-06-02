@@ -39,10 +39,10 @@ export const createPost = async (post) => {
 export const updatePost = async (post) => {
   const sql = `
   UPDATE posts 
-  SET text=?,attachment=?,author_id=?
+  SET text=?,attachment=?,likes_number=?
   WHERE post_id=?`;
 
-  const values = [post.text, post.attachment, post.authorId, post.id];
+  const values = [post.text, post.attachment, post.likes_number, post.post_id];
 
   const result = await query(sql, values);
 

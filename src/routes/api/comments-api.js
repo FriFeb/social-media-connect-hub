@@ -5,6 +5,8 @@ import {
   createComment,
   getComment,
   getComments,
+  likeComment,
+  unlikeComment,
 } from '../../services/comment-service.js';
 const router = express.Router();
 
@@ -36,6 +38,28 @@ router.post(
     const insertData = await createComment(res.comment);
     const comment = await getComment(insertData.insertId);
     res.json(comment);
+  }),
+  responseMiddleware
+);
+
+router.post(
+  '/:id/like',
+  asyncHandler(async (req, res) => {
+    const commentId = req.params.id;
+
+    const data = await likeComment(commentId);
+    res.json(data);
+  }),
+  responseMiddleware
+);
+
+router.post(
+  '/:id/unlike',
+  asyncHandler(async (req, res) => {
+    const commentId = req.params.id;
+
+    const data = await unlikeComment(commentId);
+    res.json(data);
   }),
   responseMiddleware
 );

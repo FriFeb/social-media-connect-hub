@@ -5,9 +5,14 @@ block content
         .row.h-100.justify-content-center.align-items-center.text-center
             .col-lg-8.col-xl-6
                 .h1.fw-bold.mb-3.mb-lg-5 Log in to your account
+                if isLoginFailed
+                    .text-danger Wrong email or password
                 form#loginForm.my-3(method="post" novalidate enctype="multipart/form-data")
                     .form-floating.mb-3
-                        input#inputLogin.form-control(type='text' name='login' minlength="2" maxlength="30" required placeholder='')
+                        if isLoginFailed
+                            input#inputLogin.form-control(type='text' name='login' minlength="2" maxlength="30" value=`${login}` required placeholder='')
+                        else 
+                            input#inputLogin.form-control(type='text' name='login' minlength="2" maxlength="30" required placeholder='')
                         label(for='inputLogin') Nickname or Email
                         .invalid-feedback * Please fill out this field!
                     .form-floating.mb-3
