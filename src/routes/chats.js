@@ -1,16 +1,34 @@
 import express from 'express';
+import { authenticateUser } from '../middlewares/authentication.js';
+import { getUserRoles } from '../helpers/user-role.js';
+import { getUserChats } from '../services/chat-service.js';
+import asyncHandler from 'express-async-handler';
+import { getUser } from '../services/user-service.js';
+import { getChatMessages } from '../services/message-service.js';
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  // get current user ID
-  // retrieve all the chats where current user ID is involved
-  // render the page
-  res.render('chats');
-});
+router.get(
+  '/',
+  authenticateUser,
+  asyncHandler(async (req, res) => {
+    const userRoles = getUserRoles(req.cookies.user_id);
 
-router.get('/:id', (req, res) => {
-  // grab the chat with proper id form the database
-  // render the page
-});
+    let data = {};
+
+    data.user = await getUser(userRoles.currentUserId);
+
+    const chats = await getUserChats(userRoles.currentUserId);
+    data.chats = await Promise.all(
+      chats.map(async (chat) => {
+        const friend = await getUser(chat.friend_id);
+        const messages = await getChatMessages(chat.chat_id);
+
+        return { ...chat, friend, messages };
+      })
+    );
+
+    res.render('chats', { ...data, ...userRoles });
+  })
+);
 
 export default router;

@@ -1,3 +1,5 @@
+import { postRequest } from './helpers.js';
+
 document.addEventListener('DOMContentLoaded', async () => {
   homeNav.classList.add('active', 'text-white');
 });
@@ -15,16 +17,19 @@ function toggleLikeIcon(likeIcon) {
 function increaseLikesNumber(likeSpan) {}
 
 function likePost(likeSection, postId) {
-  // toggleLikeIcon(likeSection.querySelector('i'))
-  // increaseLikesNumber(likeSection.querySelector('span'))
-  // add isliked attribute to check like
-  // change the icon
-  // increase the number
-  // call the service to increase
-  // if isLiked
-  // change the icon
-  // decrease the number
-  // call the service to decrease
+  toggleLikeIcon(likeSection.querySelector('i'));
+  increaseLikesNumber(likeSection.querySelector('span'));
+  /*
+    add isliked attribute to check like
+    change the icon
+    increase the number
+    call the service to increase
+
+  if isLiked
+    change the icon
+    decrease the number
+    call the service to decrease
+  */
 }
 
 posts.addEventListener('click', (event) => {
@@ -46,3 +51,21 @@ posts.addEventListener('click', (event) => {
     }
   }
 });
+
+postForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+
+  postRequest('posts', postForm);
+  postForm.reset();
+});
+
+const commentsForms = document.getElementsByClassName('commentForm');
+
+for (let form of commentsForms) {
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    postRequest('comments', form);
+    form.reset();
+  });
+}

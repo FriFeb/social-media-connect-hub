@@ -1,21 +1,36 @@
 import express from 'express';
-import { deleteUser } from '../services/user-service.js';
+import { getUser, updateUser } from '../services/user-service.js';
+import { authenticateUser } from '../middlewares/authentication.js';
+import { getAvatarPath } from '../middlewares/file-path.js';
+import { getUserData } from '../middlewares/user-data.js';
+import asyncHandler from 'express-async-handler';
+import { getUserRoles } from '../helpers/user-role.js';
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  // render the page
-  res.render('settings');
-});
+router.get(
+  '/',
+  authenticateUser,
+  asyncHandler(async (req, res) => {
+    const userRoles = getUserRoles(req.cookies.user_id);
 
-router.put('/', (req, res) => {
-  // get current user ID
-  // if no user
-  //  return 404
-  // else
-  //  assign new values from the req to the user values from the database
-  // validate as on user creation
-  // change the data in the database
-});
+    const user = await getUser(res.userId);
 
-router.delete('/', deleteUser, (req, res) => {});
+    res.render('settings', { ...user, ...userRoles });
+  })
+);
+
+router.post(
+  '/',
+  getUserData,
+  getAvatarPath,
+  asyncHandler(async (req, res) => {
+    await updateUser(res.user);
+    const userRoles = getUserRoles(req.cookies.user_id);
+
+    const newUserData = await getUser(res.user.user_id);
+
+    res.render('settings', { ...newUserData, ...userRoles });
+  })
+);
+
 export default router;

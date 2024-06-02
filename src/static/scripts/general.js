@@ -1,4 +1,4 @@
-import { makeRequest } from './helpers.js';
+import { getRequest } from './helpers.js';
 
 function createUserElement(user) {
   return `<tr data-user-id=${user.user_id}>
@@ -49,7 +49,7 @@ function createFormElement(form) {
     <td>${form.subject}</td>
     <td>${form.text}</td>
     <td><img src="/files/${form.attachment}" style="width:64px;" /></td>
-    <td>${form.creation_time}</td>
+    <td>${String(new Date(Date.parse(form.creation_time))).split('GMT')[0]}</td>
     <td>
       <nav class="nav flex-nowrap justify-content-center controls">
         <a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#formPanel" data-action="edit">
@@ -78,9 +78,9 @@ function createEntityElements(type, entities) {
 
 document.addEventListener('DOMContentLoaded', async () => {
   const [users, posts, forms] = await Promise.all([
-    makeRequest('http://localhost:3080/api/users'),
-    makeRequest('http://localhost:3080/api/posts'),
-    makeRequest('http://localhost:3080/api/forms'),
+    getRequest('http://localhost:3080/api/users'),
+    getRequest('http://localhost:3080/api/posts'),
+    getRequest('http://localhost:3080/api/forms'),
   ]);
 
   const userElements = createEntityElements('users', users);

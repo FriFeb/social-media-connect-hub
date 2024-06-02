@@ -3,6 +3,7 @@ import asyncHandler from 'express-async-handler';
 import { getPosts } from '../services/post-service.js';
 import { getPostComments } from '../services/comment-service.js';
 import { getUser } from '../services/user-service.js';
+import { getUserRoles } from '../helpers/user-role.js';
 const router = express.Router();
 
 async function getAuthorInfo(authorId) {
@@ -21,12 +22,8 @@ async function getAuthorInfo(authorId) {
 router.get(
   '/',
   asyncHandler(async (req, res) => {
-    // render the page
-    // if user is logged in
-    //  show all the stuff
-    // else
-    //  show only feed in sidebar
-    //  and a proposal to signup or login
+    const userRoles = getUserRoles(req.cookies.user_id);
+    const user = await getUser(userRoles.currentUserId);
 
     const posts = await getPosts();
 
@@ -55,7 +52,8 @@ router.get(
       })
     );
 
-    res.render('home', data);
+    const result = { ...userRoles, ...data, ...user };
+    res.render('home', result);
   })
 );
 

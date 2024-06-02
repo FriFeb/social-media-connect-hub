@@ -1,9 +1,10 @@
 extends layouts/main-page-layout
 
 block content
-  .col.p-3
+  .col.p-3.overflow-auto.scroll-wrapper
     .col-lg-8.offset-lg-2.col-xxl-6.offset-xxl-3
-      form.d-flex.flex-column.justify-content-center(action="http://localhost:3080/api/forms" method='post' novalidate enctype="multipart/form-data" style={"min-height": "calc(100vh - 110px)"})
+      form#contactForm.d-flex.flex-column.justify-content-center(action="http://localhost:3080/api/forms" method='post' novalidate enctype="multipart/form-data" style={"min-height": "calc(100vh - 110px)"})
+        input#inputAuthor(type='text' name="authorId" value=`${user_id}` hidden)
         .mb-3.mb-md-4
           label.form-label(for='inputSubject') Subject
           input#inputSubject.form-control(type='text' name='subject' placeholder='Your subject')
@@ -15,5 +16,14 @@ block content
           input#inputFile.form-control(type='file' name="file")
         .row.justify-content-center
           .col-md-5.text-center
-            button.btn.btn-block.btn-primary.py-2.px-4 Send Message
+            button#toastTrigger.btn.btn-block.btn-primary.py-2.px-4 Send Message
+    .toast-container.position-fixed.bottom-0.end-0.p-3
+      #liveToast.toast(role='alert' aria-live='assertive' aria-atomic='true')
+        .toast-header 
+          strong.me-auto.fs-5 Your form is sent 
+          button.btn-close.fs-6(type='button' data-bs-dismiss='toast' aria-label='Close')
+        .toast-body.fs-6
+          | Wait until we answer the form 
+          i.bi-emoji-smile
+
   script(src="/scripts/contact.js" type="module")

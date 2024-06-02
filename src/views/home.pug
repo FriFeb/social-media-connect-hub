@@ -1,73 +1,82 @@
 extends layouts/main-page-layout
 
 block content
-  .col.d-flex.flex-column.p-3
+  .col.d-flex.flex-column.p-3.overflow-auto.scroll-wrapper
     .row 
       .col-lg-8.offset-lg-2.col-xxl-6.offset-xxl-3
-        form.row.justify-content-start.align-items-center.mb-3(action="http://localhost:3080/api/posts" method="post" enctype="multipart/form-data")
-          .col-12.mb-2
-            textarea.form-control(name="text" rows="3" placeholder='Share your thoughts ...')
-          .col-auto
-            label(for="inputFile" style={cursor: "pointer"})
-              i.fs-5.bi-file-earmark-image
-            input#inputFile.form-control(type='file' name="attachment" accept=".jpg,.jpeg,.png,.gif" hidden)
-          .col-auto.ms-auto
-            button.btn.btn-primary Share
+        if isAuthenticatedUser
+          form#postForm.row.justify-content-start.align-items-center.mb-3(action="http://localhost:3080/api/posts" method="post" enctype="multipart/form-data")
+            input#inputPostAuthor(type='text' name="authorId" value=`${currentUserId}` hidden)
+            .col-12.mb-2
+              textarea.form-control(name="text" rows="3" placeholder='Share your thoughts ...')
+            .col-auto
+              label(for="inputFile" style={cursor: "pointer"})
+                i.fs-5.bi-file-earmark-image
+              input#inputFile.form-control(type='file' name="file" accept=".jpg,.jpeg,.png,.gif" hidden)
+            .col-auto.ms-auto
+              button.btn.btn-primary Share
         #posts.flex-fill.pt-3
           each post in posts 
             .card.mb-3.mb-lg-4(data-post-id=`${post.post_id}`)
               .card-header
                 .row.align-items-center
-                  .col-auto
-                    img.rounded-circle.me-3(width='40px' src=`/avatars/${post.author_avatar}` alt='')
-                  .col
-                    .h5.m-0 #{post.author_first_name} #{post.author_second_name}
-                    .text-muted @#{post.author_nickname}
+                  a.row.align-items-center.text-decoration-none(href=`http://localhost:3080/user/${post.author_id}`)
+                    .col-auto
+                      img.rounded-circle(width='40px' src=`/avatars/${post.author_avatar}` alt='')
+                    .col
+                      .h5.m-0 #{post.author_first_name} #{post.author_second_name}
+                      .text-muted @#{post.author_nickname}
               .card-body.pb-0
-                .card-text.mb-3 #{post.text}
+                .row
+                  .card-text.fs-5.mb-3 #{post.text}
+                  img(src=`/files/${post.attachment}` alt='')
                 hr.m-0
                 .row.align-items-center
                   .col
                     .nav
-                      button.post-like.nav-link.d-flex.align-items-center.p-2.p-sm-3 
+                      button.post-like.nav-link.d-flex.align-items-center.ps-0.p-2
                         i.fs-5.bi-heart.me-1
                         span.fs-5 #{post.likes_number}
                       button.comment-toggle.nav-link.d-flex.align-items-center.p-2.p-sm-3
                         i.fs-5.bi-chat-left-dots
                         span.d-none.d-sm-inline.ms-2 Comment
                   .col-auto
-                    span #{new Date(Date.parse(post.creation_time)).getHours()}:#{new Date(Date.parse(post.creation_time)).getMinutes()}:#{new Date(Date.parse(post.creation_time)).getSeconds()} #{new Date(Date.parse(post.creation_time)).getDate()}-#{new Date(Date.parse(post.creation_time)).getMonth() + 1}-#{new Date(Date.parse(post.creation_time)).getFullYear()}
+                    - var date = String(new Date(Date.parse(post.creation_time))).split(" ");
+                    span #{date[4]} #{date[2]} #{date[1]} #{date[3]} 
               .card-footer.d-none.p-3
                 each comment in post.comments
                   .row.mb-3
                     .col-auto
-                      img.rounded-circle.me-3(width='40px' src=`/avatars/${comment.author_avatar}` alt='')
+                      img.rounded-circle(width='40px' src=`/avatars/${comment.author_avatar}` alt='')
                     .col.row
                       .col-12
-                        span.h5.m-0 #{comment.author_first_name} #{comment.author_second_name}
-                        span.text-muted  @#{comment.author_nickname}
+                        a.row.align-items-center.text-decoration-none(href=`http://localhost:3080/user/${comment.author_id}`)
+                          span.h5.m-0 #{comment.author_first_name} #{comment.author_second_name}
+                          span.text-muted  @#{comment.author_nickname}
                       .col-12
                         div #{comment.text}
-                    //- .col-auto   
-                      button.btn.btn-close
                     .w-100 
                     .col-auto
                       img.rounded-circle.opacity-0(width='40px' src=`/avatars/${comment.author_avatar}` alt='')
                     .col
                       .nav
-                        button.nav-link.d-flex.align-items-center.p-2.p-sm-3
+                        button.nav-link.d-flex.align-items-center.ps-0.p-2
                           i.fs-5.bi-heart.me-1
                           span.fs-5 #{comment.likes_number}
                     .col-auto.align-content-center
-                        span #{new Date(Date.parse(comment.creation_time)).getHours()}:#{new Date(Date.parse(comment.creation_time)).getMinutes()}:#{new Date(Date.parse(comment.creation_time)).getSeconds()} #{new Date(Date.parse(comment.creation_time)).getDate()}-#{new Date(Date.parse(comment.creation_time)).getMonth() + 1}-#{new Date(Date.parse(comment.creation_time)).getFullYear()}
-                .row
-                  .col-auto   
-                    img.rounded-circle(src='https://i.imgur.com/F9Nf9Fx.jpeg' width='40')
-                  .col
-                    form.row(action="http://localhost:3080/api/comments" method="post" enctype="multipart/form-data") 
-                      .col-12.mb-1
-                        textarea.form-control(name="text")
-                      .col-12
-                        .mt-2.text-right
-                          button.btn.btn-sm.btn-primary.me-3 Post comment
+                      - var date = String(new Date(Date.parse(comment.creation_time))).split(" ");
+                      span #{date[4]} #{date[2]} #{date[1]} #{date[3]} 
+                if isAuthenticatedUser
+                  .row
+                    .col-auto   
+                      img.rounded-circle(src=`/avatars/${avatar}` width='40')
+                    .col
+                      form.commentForm.row(action="http://localhost:3080/api/comments" method="post" enctype="multipart/form-data") 
+                        input(type='text' name="authorId" value=`${currentUserId}` hidden)
+                        input(type='text' name="postId" value=`${post.post_id}` hidden)
+                        .col-12.mb-1
+                          textarea.form-control(name="text")
+                        .col-12
+                          .mt-2.text-right
+                            button.btn.btn-sm.btn-primary.me-3 Post comment
   script(src="/scripts/home.js" type="module")

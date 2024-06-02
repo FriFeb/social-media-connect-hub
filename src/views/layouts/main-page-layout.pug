@@ -15,11 +15,16 @@ html(lang="en")
         a.navbar-brand.p-3(href='/home')
             span.fs-5.d-none.d-sm-inline ConnectHub
             span.fs-5.d-sm-none CH
-        //- .navbar-nav.flex-row.ms-auto
-          a.nav-link(href='/login') 
-            button.btn.btn-primary.btn-block.py-2 Log In
-          a.nav-link(href='/signup') 
-            button.btn.btn-primary.btn-block.bg-transparent.text-body.py-2 Sign Up
+        if !isAuthenticatedUser
+          .navbar-nav.flex-row.ms-auto
+            a.nav-link(href='/login') 
+              button.btn.btn-primary.btn-block.py-2 Log In
+            a.nav-link(href='/signup') 
+              button.btn.btn-primary.btn-block.bg-transparent.text-body.py-2 Sign Up
+        else 
+          .navbar-nav.flex-row.ms-auto
+            a.nav-link(href='/logout') 
+              button.btn.btn-primary.btn-block.py-2 Logout
     .container-fluid
         .row(style={"min-height": "calc(100vh - 78px)"})
           .col-auto.col-md-3.col-xl-2.bg-body-tertiary.p-3
@@ -27,21 +32,23 @@ html(lang="en")
               a#homeNav.nav-link.d-flex.align-items-center.text-black(href='/home')
                 i.fs-4.bi-house.me-md-1
                 span.ms-1.d-none.d-md-inline Home
-              a#chatsNav.nav-link.d-flex.align-items-center.text-black(href='/chats')
-                i.fs-4.bi-chat.me-md-1
-                span.ms-1.d-none.d-md-inline Chats
-              a#settingsNav.nav-link.d-flex.align-items-center.text-black(href='/settings')
-                i.fs-4.bi-gear.me-md-1
-                span.ms-1.d-none.d-md-inline Settings
-              a#profileNav.nav-link.d-flex.align-items-center.text-black(href='/user/3')
-                i.fs-4.bi-person.me-md-1
-                span.ms-1.d-none.d-md-inline Profile
-              a#contactNav.nav-link.d-flex.align-items-center.text-black(href='/contact')
-                i.fs-4.bi-question-circle.me-md-1
-                span.ms-1.d-none.d-md-inline Contact Us
-              a.nav-link.d-flex.align-items-center.text-black(href='' data-bs-toggle='modal' data-bs-target='#adminPanel') 
-                i.fs-4.bi-pencil-square.me-md-1
-                span.ms-1.d-none.d-md-inline Admin panel
+              if isAuthenticatedUser
+                a#chatsNav.nav-link.d-flex.align-items-center.text-black(href='/chats')
+                  i.fs-4.bi-chat.me-md-1
+                  span.ms-1.d-none.d-md-inline Chats
+                a#settingsNav.nav-link.d-flex.align-items-center.text-black(href='/settings')
+                  i.fs-4.bi-gear.me-md-1
+                  span.ms-1.d-none.d-md-inline Settings
+                a#profileNav.nav-link.d-flex.align-items-center.text-black(href=`/user/${currentUserId}`)
+                  i.fs-4.bi-person.me-md-1
+                  span.ms-1.d-none.d-md-inline Profile
+                a#contactNav.nav-link.d-flex.align-items-center.text-black(href='/contact')
+                  i.fs-4.bi-question-circle.me-md-1
+                  span.ms-1.d-none.d-md-inline Contact Us
+              if isAdminUser 
+                a.nav-link.d-flex.align-items-center.text-black(href='' data-bs-toggle='modal' data-bs-target='#adminPanel') 
+                  i.fs-4.bi-pencil-square.me-md-1
+                  span.ms-1.d-none.d-md-inline Admin panel
           block content
     #adminPanel.modal.fade(tabindex='-1')
       .modal-dialog.modal-fullscreen.modal-dialog-scrollable
@@ -63,7 +70,7 @@ html(lang="en")
                       i.fs-4.bi-info-circle.me-lg-1
                       span.ms-1.d-none.d-lg-inline Contact forms
                 .col.pe-0
-                  #adminTable
+                  #adminTable.overflow-auto(style={"height": "calc(100vh - 50px - 32px)"})
                     table#usersTable.table.table-hover.align-middle.caption-top.m-0
                       caption Number of users:  
                         span#userNumber 44

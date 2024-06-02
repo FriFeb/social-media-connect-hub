@@ -6,6 +6,7 @@ import {
   getMessage,
   getMessages,
 } from '../../services/message-service.js';
+import { getFilePath } from '../../middlewares/file-path.js';
 const router = express.Router();
 
 router.get(
@@ -30,10 +31,11 @@ router.get(
 
 router.post(
   '/',
+  getFilePath,
   asyncHandler(async (req, res) => {
-    res.message = req.body;
+    const formData = { ...req.body, attachment: res.file };
 
-    const insertData = await createMessage(res.message);
+    const insertData = await createMessage(formData);
     const message = await getMessage(insertData.insertId);
     res.json(message);
   }),

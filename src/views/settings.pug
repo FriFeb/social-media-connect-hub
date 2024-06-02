@@ -1,38 +1,42 @@
 extends layouts/main-page-layout
 
 block content
-  .col.p-3
+  .col.p-3.overflow-auto.scroll-wrapper
     .col-lg-8.offset-lg-2.col-xxl-6.offset-xxl-3
-      form#settingsForm.d-flex.flex-column.justify-content-center.mb-3(method="put" style="min-height: calc(100vh - 94px)" enctype="multipart/form-data" novalidate)
+      form#settingsForm.d-flex.flex-column.justify-content-center.mb-3(method="post" style="min-height: calc(100vh - 94px)" enctype="multipart/form-data" novalidate)
+        input(type='text' name="user_id" value=`${user_id}` hidden)
         .row.justify-content-center.mb-3.mb-md-4.text-center 
           .col-4
             .mb-3.mb-md-4
-              img#imageAvatar.w-100.rounded-circle(src='/avatars/default_user_avatar.jpeg')
+              img#imageAvatar.w-100.rounded-circle(src=`/avatars/${avatar}`)
           .w-100
           .col-4
             label.text-muted(for="inputAvatar" style={cursor: "pointer"}) Choose an avatar
-            input#inputAvatar.form-control(type='file' name="avatar" onchange="imageAvatar.src = window.URL.createObjectURL(this.files[0])" hidden)
+            input#inputAvatar.form-control(type='file' name="avatar" onchange="imageAvatar.src = window.URL.createObjectURL(this.files[0])" accept=".jpg,.jpeg,.png,.gif" hidden)
         .mb-3.mb-md-4
           label.form-label(for='inputFirstName') First name
-          input#inputFirstName.form-control(type='text' name="firstName" minlength="2" maxlength="50" pattern="^[A-Z][a-z]{1,39}" required)
+          input#inputFirstName.form-control(type='text' name="first_name" minlength="2" maxlength="50" pattern="^[A-Z][a-z]{1,39}" required value=`${first_name}`)
           .invalid-feedback * Please fill out this field!
         .mb-3.mb-md-4
           label.form-label(for='inputSecondName') Second name
-          input#inputSecondName.form-control(type='text' name="secondName" minlength="2" maxlength="50" pattern="^[A-Z][a-z]{1,39}" required)
+          input#inputSecondName.form-control(type='text' name="second_name" minlength="2" maxlength="50" pattern="^[A-Z][a-z]{1,39}" required value=`${second_name}`)
           .invalid-feedback * Please fill out this field!
         .mb-3.mb-md-4
           label.form-label(for='inputNickname') Nickname
-          input#inputNickname.form-control(type='text' name='nickname' minlength="2" maxlength="30" required)
+          input#inputNickname.form-control(type='text' name='nickname' minlength="2" maxlength="30" required value=`${nickname}`)
           .invalid-feedback * Please fill out this field!
         .mb-3.mb-md-4
+          label.form-label(for='inputBiography') Biography
+          textarea#inputBiography.form-control(type='text' name='biography') #{biography}
+        .mb-3.mb-md-4
           label.form-label(for='inputEmail') Email
-          input#inputEmail.form-control(type='email' name='email' minlength="5" maxlength="50" pattern=".{5,50}" required)
+          input#inputEmail.form-control(type='email' name='email' minlength="5" maxlength="50" pattern=".{5,50}" required value=`${email}`)
           .invalid-feedback * Please fill out this field!
         .mt-4.mb-2.d-block.text-center 
           .col-12
             button.btn.btn-primary.btn-block.w-100.fs-5.py-2 Save
       h3 Danger zone
-      form(method="delete").border.border-3.border-danger.p-3
+      form(method="post" action=`http://localhost:3080/api/users/delete/${user_id}`).border.border-3.border-danger.p-3
         .row.align-items-center
           .col-12.col-sm.mb-2.mb-sm-0
             .lead Delete your account 

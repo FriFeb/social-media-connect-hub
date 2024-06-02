@@ -1,66 +1,49 @@
 extends layouts/main-page-layout
 
 block content
-  .col.d-flex.flex-column.flex-lg-row.p-0(style={width: "1px", height: "calc(100vh - 78px)"})
-    nav#chats.nav.nav-pills.flex-lg-column.px-lg-3.overflow-auto.flex-nowrap.border-end.border-bottom
-      a.nav-link.active.d-flex.align-items-center.text-white.p-3.mb-1(href='#')
-        img(src="../avatars//default_user_avatar.jpeg" width="40px").rounded-circle  
-        span.ms-2.d-none.d-lg-inline.fs-5 My friend
-      a.nav-link.d-flex.align-items-center.text-black.p-3.mb-1(href='#')
-        img(src="../avatars//default_user_avatar.jpeg" width="40px").rounded-circle  
-        span.ms-2.d-none.d-lg-inline.fs-5 My friend
-      a.nav-link.d-flex.align-items-center.text-black.p-3.mb-1(href='#')
-        img(src="../avatars//default_user_avatar.jpeg" width="40px").rounded-circle  
-        span.ms-2.d-none.d-lg-inline.fs-5 My friend
-
-      a.nav-link.d-flex.align-items-center.text-black.p-3.mb-1(href='#')
-        img(src="../avatars//default_user_avatar.jpeg" width="40px").rounded-circle  
-        span.ms-2.d-none.d-lg-inline.fs-5 My friend
-
-      a.nav-link.d-flex.align-items-center.text-black.p-3.mb-1(href='#')
-        img(src="../avatars//default_user_avatar.jpeg" width="40px").rounded-circle  
-        span.ms-2.d-none.d-lg-inline.fs-5 My friend
-      a.nav-link.d-flex.align-items-center.text-black.p-3.mb-1(href='#')
-        img(src="../avatars//default_user_avatar.jpeg" width="40px").rounded-circle  
-        span.ms-2.d-none.d-lg-inline.fs-5 My friend
-      a.nav-link.d-flex.align-items-center.text-black.p-3.mb-1(href='#')
-        img(src="../avatars//default_user_avatar.jpeg" width="40px").rounded-circle  
-        span.ms-2.d-none.d-lg-inline.fs-5 My friend
-      a.nav-link.d-flex.align-items-center.text-black.p-3.mb-1(href='#')
-        img(src="../avatars//default_user_avatar.jpeg" width="40px").rounded-circle  
-        span.ms-2.d-none.d-lg-inline.fs-5 My friend
-      a.nav-link.d-flex.align-items-center.text-black.p-3.mb-1(href='#')
-        img(src="../avatars//default_user_avatar.jpeg" width="40px").rounded-circle  
-        span.ms-2.d-none.d-lg-inline.fs-5 My friend
-      a.nav-link.d-flex.align-items-center.text-black.p-3.mb-1(href='#')
-        img(src="../avatars//default_user_avatar.jpeg" width="40px").rounded-circle  
-        span.ms-2.d-none.d-lg-inline.fs-5 My friend
-      a.nav-link.d-flex.align-items-center.text-black.p-3.mb-1(href='#')
-        img(src="../avatars//default_user_avatar.jpeg" width="40px").rounded-circle  
-        span.ms-2.d-none.d-lg-inline.fs-5 My friend
-    .d-flex.flex-column.flex-fill.h-100.p-3
-      .flex-fill.fs-5
-        .py-3
-          span.p-3.bg-body-tertiary Msg 1
-        .py-3
-          span.p-3.bg-body-tertiary Msg 2
-        .py-3
-          span.p-3.bg-body-tertiary Msg 3
-        .py-3.text-white.text-end
-          span.p-3.bg-primary Msg 1
-        .py-3.text-white.text-end
-          span.p-3.bg-primary Msg 2
-        .py-3.text-white.text-end
-          span.p-3.bg-primary Msg 3
-      form(method="post").row.justify-content-center.align-items-center.px-3
+  .col.d-flex.flex-column.flex-lg-row.p-0.overflow-auto.scroll-wrapper
+    nav#chats.nav.nav-pills.flex-lg-column.px-lg-3.overflow-auto.flex-nowrap.border-end.border-bottom.col-auto.sticky-top.bg-body
+      each chat in chats
+        button.nav-link.d-flex.align-items-center.text-black.p-3.mb-1(data-chat-id=`${chat.chat_id}`)
+          img(src=`avatars/${chat.friend.avatar}` width="40px").rounded-circle  
+          span.ms-2.d-none.d-lg-inline.fs-5 #{chat.friend.first_name} #{chat.friend.second_name}
+    .d-flex.flex-column.flex-fill.p-3.overflow-auto
+      #messages.flex-fill.fs-5.overflow-auto.overflow-x-hidden.mb-3
+        each chat in chats 
+          .row.d-none(data-chat-id=`${chat.chat_id}`)
+            each message in chat.messages
+              if message.author_id == currentUserId 
+                .row.justify-content-end.py-2.text-white
+                  if message.text
+                    .col-10.col-md-8
+                      .row.justify-content-end
+                        .col-auto
+                          .rounded.p-3.bg-primary #{message.text}
+                  if message.attachment
+                    .w-100
+                    .col-10.col-md-4.pt-2
+                      img.img-fluid(src=`/files/${message.attachment}`)
+              else
+                .row.py-2
+                  .col-10.col-md-8
+                    .row
+                      .col-auto
+                        .rounded.p-3.bg-body-tertiary #{message.text}
+                  if message.attachment
+                    .w-100
+                    .col-10.col-md-4.pt-2
+                      img.img-fluid(src=`/files/${message.attachment}`)
+      form#chatForm.row.justify-content-center.align-items-center.px-3.d-none(enctype="multipart/form-data")
+        input#inputAuthor(type='text' name="authorId" value=`${user.user_id}` hidden)
+        input#inputChat(type='text' name="chatId" hidden)
         .col-auto.d-none.d-md-inline 
-          img#userAvatar.rounded-circle(src='/avatars/default_user_avatar.jpeg' width="40px")
+          img#userAvatar.rounded-circle(src=`/avatars/${user.avatar}` width="40px")
         .col
-          input.form-control(type='text', placeholder='Type a message')
-        .col-auto.d-none.d-md-inline
+          input.form-control(type='text' name="text" placeholder='Type a message')
+        .col-auto
           label(for="inputFile" style={cursor: "pointer"})
               i.fs-5.bi-file-earmark-image
-          input#inputFile.form-control(type='file' hidden)
+          input#inputFile.form-control(type='file' name="file" hidden)
         .col-auto
           button.btn.p-0
             i.fs-5.bi-send

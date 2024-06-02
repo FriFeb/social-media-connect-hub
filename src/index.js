@@ -6,19 +6,15 @@ import fileUpload from 'express-fileupload';
 import bodyParser from 'body-parser';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import cookieParser from 'cookie-parser';
 
 const app = express();
 const port = 3080;
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-// app.use(express.json());
-// app.use(
-//   bodyParser.urlencoded({
-//     extended: true,
-//   })
-// );
-// app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(cookieParser());
 app.use(fileUpload());
 app.set('views', join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -32,20 +28,34 @@ app.listen(port, () => {
 
 /* 
 TODO: 
-  - let the content on the pages to be loaded from db
-    - home
-      - like post func
-      - like comment func
-    - user profile
-      + create posts section
-      + create comments section
-      - create friends section
-    - chats (get all the chats)
-
   - authentication
-    - provide each form with current user id
+    - implement binding token with user id on log/reg
 
-  - admin
-    - review user / form on view icon
-    - add deletion ability
+    - check for auth token on pages:
+      - HOME
+        if no token
+          - remove ability to like (O)
+        else 
+          - add ability to like
+          - show post and comment without refresh (O)
+
+  - DELETION: 
+    - on profile page 
+      - posts
+      - friends
+      - comments
+
+    - admin panel
+      - user 
+      - post
+      - form 
+
+  - EDITING:
+    - admin panel
+      - user
+        + show detailed info about user
+      - form
+        - show detailed info about form
+      - post
+        - show detailed info about post
 */

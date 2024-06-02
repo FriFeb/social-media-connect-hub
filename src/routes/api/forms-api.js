@@ -2,6 +2,7 @@ import express from 'express';
 import asyncHandler from 'express-async-handler';
 import { responseMiddleware } from '../../middlewares/response-middleware.js';
 import { createForm, getForm, getForms } from '../../services/form-service.js';
+import { getFilePath } from '../../middlewares/file-path.js';
 const router = express.Router();
 
 router.get(
@@ -26,11 +27,11 @@ router.get(
 
 router.post(
   '/',
+  getFilePath,
   asyncHandler(async (req, res) => {
-    res.form = req.body;
-    // upload file
+    const formData = { ...req.body, attachment: res.file };
 
-    const insertData = await createForm(res.form);
+    const insertData = await createForm(formData);
     const form = await getForm(insertData.insertId);
     res.json(form);
   }),

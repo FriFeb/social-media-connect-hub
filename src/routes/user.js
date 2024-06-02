@@ -4,12 +4,19 @@ import { getUser } from '../services/user-service.js';
 import { getUserPosts } from '../services/post-service.js';
 import { getUserFriends } from '../services/friendship-service.js';
 import { getUserComments } from '../services/comment-service.js';
+import { getUserRoles } from '../helpers/user-role.js';
 const router = express.Router();
 
 router.get(
   '/:id',
   asyncHandler(async (req, res) => {
+    const currentUserId = req.cookies.user_id;
+    const userRoles = getUserRoles(currentUserId);
+
     const userId = req.params.id;
+
+    const isProfileOwner = userId === currentUserId;
+
     const user = await getUser(userId);
 
     if (!user) {
@@ -28,7 +35,19 @@ router.get(
       })
     );
 
-    res.render('user', user);
+    const currentUserFriendIds = await getUserFriends(currentUserId);
+
+    const isFriend = currentUserFriendIds.some(
+      (user) => user.user_id == userId
+    );
+
+    res.render('user', {
+      ...user,
+      ...userRoles,
+      currentUserId,
+      isFriend,
+      isProfileOwner,
+    });
   })
 );
 

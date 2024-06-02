@@ -33,10 +33,12 @@
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.6",
     "express": "^4.19.2",
     "express-async-errors": "^3.1.1",
     "express-async-handler": "^1.2.0",
     "express-fileupload": "^1.5.0",
+    "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.9.7",
     "pug": "^3.0.2"
   }

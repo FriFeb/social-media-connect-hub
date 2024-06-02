@@ -1,6 +1,7 @@
 import express from 'express';
 import {
   createUser,
+  deleteUser,
   getUser,
   getUsers,
   updateUser,
@@ -106,15 +107,25 @@ router.post(
   responseMiddleware
 );
 
-router.put(
+router.post(
   '/:id',
   asyncHandler(async (req, res) => {
     const userId = req.params.id;
     const userData = req.body;
-    debugger;
 
     const user = await updateUser(userId);
     res.json(user);
+  }),
+  responseMiddleware
+);
+
+router.post(
+  '/delete/:id',
+  asyncHandler(async (req, res) => {
+    const userId = req.params.id;
+
+    await deleteUser(userId);
+    res.cookie('user_id', '').redirect('/home');
   }),
   responseMiddleware
 );

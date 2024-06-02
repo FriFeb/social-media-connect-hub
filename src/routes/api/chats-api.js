@@ -39,9 +39,7 @@ router.get(
 router.post(
   '/',
   asyncHandler(async (req, res) => {
-    res.chat = req.body;
-
-    const insertData = await createChat(res.chat);
+    const insertData = await createChat(req.body);
     const chat = await getChat(insertData.insertId);
     res.json(chat);
   }),

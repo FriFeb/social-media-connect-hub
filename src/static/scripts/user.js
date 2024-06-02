@@ -1,9 +1,16 @@
+import { postRequest } from './helpers.js';
+
 document.addEventListener('DOMContentLoaded', () => {
-  profileNav.classList.add('active', 'text-white');
+  const currentUserId = document.cookie.match(new RegExp(/(?<==).*/))[0];
+  const userId = document.URL.match(new RegExp(/(?<=user\/).*$/))[0];
+
+  if (currentUserId === userId) {
+    profileNav.classList.add('active', 'text-white');
+  }
 });
 
 function removeActiveLinks() {
-  const navLinks = userNavigation.querySelectorAll('a');
+  const navLinks = userNavigation.querySelectorAll('button');
   navLinks.forEach((navLink) => {
     navLink.classList.remove('active');
   });
@@ -19,17 +26,28 @@ function hideAdminTables() {
   userComments.classList.add('d-none');
 }
 
-function showProperAdminTable(tableName) {
+function showProperUserSection(tableName) {
   document.querySelector(`#user${tableName}`).classList.remove('d-none');
 }
 
 userNavigation.addEventListener('click', (event) => {
-  const navLink = event.target.closest('a');
+  const navLink = event.target.closest('button');
   if (!navLink) return;
 
   removeActiveLinks();
   navLink.classList.add('active');
 
   hideAdminTables();
-  showProperAdminTable(navLink.dataset.tableName);
+  showProperUserSection(navLink.dataset.tableName);
+});
+
+friendForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+
+  const friendship = await postRequest('friendships', friendForm);
+
+  chatForm.friendshipId.value = friendship.friendship_id;
+  postRequest('chats', chatForm);
+
+  location.reload();
 });

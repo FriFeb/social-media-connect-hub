@@ -3,6 +3,7 @@ import { createPost, getPost, getPosts } from '../../services/post-service.js';
 import asyncHandler from 'express-async-handler';
 import { responseMiddleware } from '../../middlewares/response-middleware.js';
 import { getPostComments } from '../../services/comment-service.js';
+import { getFilePath } from '../../middlewares/file-path.js';
 const router = express.Router();
 
 router.get(
@@ -38,10 +39,11 @@ router.get(
 
 router.post(
   '/',
+  getFilePath,
   asyncHandler(async (req, res) => {
-    res.post = req.body;
+    const postData = { ...req.body, attachment: res.file };
 
-    const insertData = await createPost(res.post);
+    const insertData = await createPost(postData);
     const post = await getPost(insertData.insertId);
     res.json(post);
   }),

@@ -1,24 +1,34 @@
 extends layouts/main-page-layout
 
 block content
-  .col.d-flex.flex-column.p-3
+  .col.d-flex.flex-column.p-3.overflow-auto.scroll-wrapper
     .row 
       .col-lg-8.offset-lg-2.col-xxl-6.offset-xxl-3
         .row.align-items-center.mb-3
-          .col.col-sm-4.col-xl-3.mb-2
+          .col-4.col-xl-3.mb-2
             img.img-fluid.rounded-circle(src=`/avatars/${avatar}`)
           .col-auto.flex-column.align-content-center
             h5.fw-bold #{first_name} #{second_name}
             .muted @#{nickname}
-          .col.text-center.text-sm-end
-            button.btn.btn-primary Add as friend
+          if isAuthenticatedUser && !isProfileOwner
+            if !isFriend
+              .col.text-center.text-sm-end
+                form#friendForm(method="post" enctype="multipart/form-data" novalidate)
+                  input(type='text' name="sourceId" value=`${currentUserId}` hidden)
+                  input(type='text' name="targetId" value=`${user_id}` hidden)
+                  button.btn.btn-primary Add as friend
+                form#chatForm(method="post" enctype="multipart/form-data" novalidate)
+                  input(type='text' name="friendshipId" hidden)
+            if isFriend 
+              .col.text-center.text-sm-end
+                .badge.text-bg-secondary You are friends
           .w-100
           .col.mt-2.px-2
             p #{biography}
         #userNavigation.nav.nav-pills.nav-fill.flex-nowrap.overflow-auto.text-center.gap-3.gap-md-5.mb-3
-          a.nav-link.rounded-5.active(data-table-name="Posts") Posts
-          a.nav-link.rounded-5(data-table-name="Friends") Friends
-          a.nav-link.rounded-5(data-table-name="Comments") Comments
+          button.nav-link.rounded-5.active(data-table-name="Posts") Posts
+          button.nav-link.rounded-5(data-table-name="Friends") Friends
+          button.nav-link.rounded-5(data-table-name="Comments") Comments
         #userContent.flex-fill.py-3
           #userPosts
             each post in posts 
@@ -26,7 +36,7 @@ block content
                 .card-header
                   .row.align-items-center
                     .col-auto
-                      img.rounded-circle.me-3(width='40px' src=`/avatars/${avatar}` alt='')
+                      img.rounded-circle(width='40px' src=`/avatars/${avatar}` alt='')
                     .col
                       .h5.m-0 #{first_name} #{second_name}
                       .text-muted @#{nickname}
@@ -36,16 +46,17 @@ block content
                   .row.align-items-center
                     .col
                       .nav
-                        a.post-like.nav-link.d-flex.align-items-center.p-2.p-sm-3 
+                        a.post-like.nav-link.d-flex.align-items-center.p-2.ps-0 
                           i.fs-5.bi-heart.me-1
                           span.fs-5= post.likes_number
                     .col-auto
-                      span #{new Date(Date.parse(post.creation_time)).getHours()}:#{new Date(Date.parse(post.creation_time)).getMinutes()}:#{new Date(Date.parse(post.creation_time)).getSeconds()} #{new Date(Date.parse(post.creation_time)).getDate()}-#{new Date(Date.parse(post.creation_time)).getMonth() + 1}-#{new Date(Date.parse(post.creation_time)).getFullYear()}
+                      - var date = String(new Date(Date.parse(post.creation_time))).split(" ");
+                      span #{date[4]} #{date[2]} #{date[1]} #{date[3]} 
           #userFriends.d-none
             each friend in friends
               a.row.align-items-center.text-decoration-none.mb-3(href=`http://localhost:3080/user/${friend.user_id}`)
                 .col-auto
-                  img.rounded-circle.me-3(width='40px' src=`/avatars/${friend.avatar}` alt='')
+                  img.rounded-circle(width='40px' src=`/avatars/${friend.avatar}` alt='')
                 .col
                   .h5.m-0 #{friend.first_name} #{friend.second_name}
                   .text-muted @#{friend.nickname}
@@ -53,7 +64,7 @@ block content
             each comment in comments
               .row.mb-3
                   .col-auto
-                    img.rounded-circle.me-3(width='40px' src=`/avatars/${avatar}` alt='')
+                    img.rounded-circle(width='40px' src=`/avatars/${avatar}` alt='')
                   .col.row
                     .col-12
                       span.h5.m-0 #{first_name} #{second_name}
@@ -65,10 +76,11 @@ block content
                     img.rounded-circle.opacity-0(width='40px' src=`/avatars/${avatar}` alt='')
                   .col
                     .nav
-                      a.nav-link.d-flex.align-items-center.p-2.p-sm-3
-                        i.fs-5.bi-heart-fill.me-1
+                      a.nav-link.d-flex.align-items-center.p-2.ps-0
+                        i.fs-5.bi-heart.me-1
                         span.fs-5 #{comment.likes_number}
                   .col-auto.align-content-center
-                    span #{new Date(Date.parse(comment.creation_time)).getHours()}:#{new Date(Date.parse(comment.creation_time)).getMinutes()}:#{new Date(Date.parse(comment.creation_time)).getSeconds()} #{new Date(Date.parse(comment.creation_time)).getDate()}-#{new Date(Date.parse(comment.creation_time)).getMonth() + 1}-#{new Date(Date.parse(comment.creation_time)).getFullYear()}
+                    - var date = String(new Date(Date.parse(comment.creation_time))).split(" ");
+                    span #{date[4]} #{date[2]} #{date[1]} #{date[3]} 
 
   script(src="/scripts/user.js" type="module")
